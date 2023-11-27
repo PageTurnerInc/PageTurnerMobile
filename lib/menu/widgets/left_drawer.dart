@@ -1,4 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:page_turner_mobile/menu/screens/login.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -6,6 +11,7 @@ class LeftDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Drawer(
       child: ListView(
         children: [
@@ -41,7 +47,7 @@ class LeftDrawer extends StatelessWidget {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
             // Bagian redirection ke MyHomePage
-            onTap: () {
+            onTap: () async {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -53,66 +59,65 @@ class LeftDrawer extends StatelessWidget {
             leading: const Icon(Icons.checklist),
             title: const Text('Catalogue'),
             // Bagian redirection ke ShopFormPage
-            onTap: () {
-              /*
-              TODO: Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
+            onTap: () async {
+              
             },
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('My Books'),
             // Bagian redirection ke ShopFormPage
-            onTap: () {
-              /*
-              TODO: Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
+            onTap: () async {
+              
             },
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Shopping Cart'),
             // Bagian redirection ke ShopFormPage
-            onTap: () {
-              /*
-              TODO: Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
+            onTap: () async {
+              
             },
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Library'),
             // Bagian redirection ke ShopFormPage
-            onTap: () {
-              /*
-              TODO: Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
+            onTap: () async {
+              
             },
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Wishlist'),
             // Bagian redirection ke ShopFormPage
-            onTap: () {
-              /*
-              TODO: Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
+            onTap: () async {
+              
             },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
             // Bagian redirection ke ShopFormPage
-            onTap: () {
-              /*
-              TODO: Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
+            onTap: () async {
+              final response = await request.logout(
+                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/"
+              );
+              String message = response["message"];
+              if (response['status']) {
+                String uname = response["username"];
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("$message Sampai jumpa, $uname."),
+                ));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(message),
+                ));
+              }
             },
           ),
         ],

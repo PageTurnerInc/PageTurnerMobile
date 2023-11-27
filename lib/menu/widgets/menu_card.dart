@@ -55,7 +55,6 @@ class MenuCard extends StatelessWidget {
 
           else if (item.name == "Logout") {
             final response = await request.logout(
-              // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
               "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/"
             );
             String message = response["message"];
