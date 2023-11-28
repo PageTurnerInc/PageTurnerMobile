@@ -3,9 +3,9 @@ import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 
 class BookPage extends StatelessWidget {
-  final Book product;
+  final Book book;
 
-  const BookPage(this.product, {super.key});
+  const BookPage(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +22,17 @@ class BookPage extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              product.fields.bookTitle
+              book.fields.bookTitle
             ),
             
             Text(
-              "Year of publication: ${product.fields.yearOfPublication}"
+              "Year of publication: ${book.fields.yearOfPublication}"
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
-                product.fields.bookAuthor
+                book.fields.bookAuthor
               )
             ),
           ],
