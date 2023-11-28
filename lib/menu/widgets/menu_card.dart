@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 
@@ -31,12 +32,16 @@ class MenuCard extends StatelessWidget {
           // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!")));
-
+            ..showSnackBar(
+              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
+            );
+          
           if (item.name == "Catalogue") {
-
-          } 
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BookCataloguePage())
+            );
+          }
           else if (item.name == "My Books") {
             Navigator.push(
               context,
