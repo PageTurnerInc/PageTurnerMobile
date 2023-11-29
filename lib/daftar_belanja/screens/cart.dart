@@ -15,12 +15,10 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Future<List<Book>> fetchProduct(request) async {
-    // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var response = await request.get(
-        "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/");
-    // melakukan decode response menjadi bentuk json
+      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/"
+    );
 
-    // melakukan konversi data json menjadi object Product
     List<Book> listShoppingCart = [];
     for (var d in response) {
       if (d != null) {

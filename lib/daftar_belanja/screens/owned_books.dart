@@ -16,12 +16,10 @@ class OwnedBooksPage extends StatefulWidget {
 class _OwnedBooksPageState extends State<OwnedBooksPage> {
   Future<List<Book>> fetchProduct(request) async {
 
-    // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var response = await request.get(
-      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_owned_books/");
-    // melakukan decode response menjadi bentuk json
+      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_owned_books/"
+    );
 
-    // melakukan konversi data json menjadi object Product
     List<Book> listOwnedBooks = [];
     for (var d in response) {
       if (d != null) {
@@ -41,7 +39,8 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
         title: const Text('My Books'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: 
+        Padding(
           padding: const EdgeInsets.all(10.0),
           child: FutureBuilder<List<Book>>(
             future: fetchProduct(request),
