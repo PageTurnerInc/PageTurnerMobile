@@ -8,21 +8,19 @@ import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 
 import 'package:page_turner_mobile/rak_buku/screens/add_library.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_buku.dart';
-import 'package:page_turner_mobile/rak_buku/screens/rak_rekomendasi.dart';
 
 
-
-class RakPage extends StatefulWidget {
-  const RakPage({Key? key}) : super(key: key);
+class RakRecommendPage extends StatefulWidget {
+  const RakRecommendPage({Key? key}) : super(key: key);
 
   @override
-  _RakPageState createState() => _RakPageState();
+  _RakRecommendPageState createState() => _RakRecommendPageState();
 }
 
-class _RakPageState extends State<RakPage> {
+class _RakRecommendPageState extends State<RakRecommendPage> {
   Future<List<Rak>> fetchRak(request) async {
     var response = await request.get(
-      "http://127.0.0.1:8080/rak_buku/get-rak/"
+      "http://127.0.0.1:8080/rak_buku/get-rak-all/"
     );
 
     // melakukan konversi data json menjadi object Product
@@ -41,7 +39,7 @@ class _RakPageState extends State<RakPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Library'),
+        title: const Text('Library Recommendation'),
       ),
       drawer: const LeftDrawer(),
       body: FutureBuilder<List<Rak>>(
@@ -67,37 +65,6 @@ class _RakPageState extends State<RakPage> {
           else {
             return Column(
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Your Library",
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 16.0), // Add some spacing between the text and the button
-                    ElevatedButton(
-                      onPressed: () {
-                        // TODO: Handle button press
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddLibrary()));
-                      },
-                      child: const Text('Add New Library'),
-                    ),
-                    SizedBox(width: 16.0), // Add some spacing between the text and the button
-                    ElevatedButton(
-                      onPressed: () {
-                        // TODO: Handle button press
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RakRecommendPage()));
-                      },
-                      child: const Text('Recommendation'),
-                    ),
-                  ],
-                ),
-
                 Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data!.length,
