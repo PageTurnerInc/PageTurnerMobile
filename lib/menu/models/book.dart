@@ -91,6 +91,84 @@ class BookCard extends StatelessWidget {
 
   const BookCard(this.book, {super.key}); // Constructor
 
+  void _showModal(BuildContext context) {
+    String title = book.fields.bookTitle;
+    if (title.length > 42) {
+      title = "${title.substring(0, 42)}...";
+    }
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: SingleChildScrollView( // Wrap with SingleChildScrollView
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppBar(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                    ),
+                  ),
+                  automaticallyImplyLeading: false,
+                  title: Text(
+                    title,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Image.network(book.fields.imageUrlL, fit: BoxFit.cover),
+                      const SizedBox(height: 10),
+                      Text(
+                        book.fields.bookAuthor,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle Book Details
+                            },
+                            child: const Text('Book Details'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle Remove from Cart
+                            },
+                            child: const Text('Remove from Cart'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     // Truncate title if it's longer than 42 characters
@@ -107,19 +185,22 @@ class BookCard extends StatelessWidget {
         onTap: () async {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-                content: Text("Kamu telah menekan buku $title!")));
+            ..showSnackBar(
+                SnackBar(content: Text("Kamu telah menekan buku $title!")));
+          _showModal(context);
         },
         child: Container(
           height: 400, // Fixed height
           width: 250, // Fixed width
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch to fill width
+            crossAxisAlignment:
+                CrossAxisAlignment.stretch, // Stretch to fill width
             children: [
               Expanded(
                 flex: 8,
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(10.0)),
                   child: Image.network(
                     book.fields.imageUrlL,
                     fit: BoxFit.cover,
@@ -163,4 +244,3 @@ class BookCard extends StatelessWidget {
     );
   }
 }
-
