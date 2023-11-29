@@ -1,10 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/wishlist/screens/catalouge_temp.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
+import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 
 class MenuItem {
   final String name;
@@ -35,30 +38,43 @@ class MenuCard extends StatelessWidget {
             );
           
           if (item.name == "Catalogue") {
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BookCataloguePage())
+            );
           }
-
           else if (item.name == "My Books") {
-            
-          }
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OwnedBooksPage(),
+              ),
+            );
+          } 
           else if (item.name == "Shopping Cart") {
-            
-          }
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ShoppingCartPage(),
+              ),
+            );
+          } 
           else if (item.name == "Library") {
-            
-          }
 
+          } 
           else if (item.name == "Wishlist") {
-            Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  Catalouge()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WishlistPage(),
+              ),
+            );
+            
           }
 
           else if (item.name == "Logout") {
             final response = await request.logout(
-              "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/"
-            );
+                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
             String message = response["message"];
             if (response['status']) {
               String uname = response["username"];

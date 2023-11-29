@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
+import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
@@ -68,7 +71,12 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('My Books'),
             // Bagian redirection ke ShopFormPage
             onTap: () async {
-              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const OwnedBooksPage(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -76,7 +84,12 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Shopping Cart'),
             // Bagian redirection ke ShopFormPage
             onTap: () async {
-              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ShoppingCartPage(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -92,6 +105,12 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Wishlist'),
             // Bagian redirection ke ShopFormPage
             onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WishlistPage(),
+                ),
+              );
               
             },
           ),

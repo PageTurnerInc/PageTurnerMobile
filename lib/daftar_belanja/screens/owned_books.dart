@@ -3,30 +3,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:page_turner_mobile/wishlist/models/wishlist.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 
-class WishlistPage extends StatefulWidget {
-  const WishlistPage({Key? key}) : super(key: key);
+class OwnedBooksPage extends StatefulWidget {
+  const OwnedBooksPage({Key? key}) : super(key: key);
 
   @override
-  _WishlistPageState createState() => _WishlistPageState();
+  _OwnedBooksPageState createState() => _OwnedBooksPageState();
 }
 
-class _WishlistPageState extends State<WishlistPage> {
-  Future<List<Wishlist>> fetchProduct(request) async {
-    var response = await request.get(
-        "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/get_wishlist_items/");
+class _OwnedBooksPageState extends State<OwnedBooksPage> {
+  Future<List<Book>> fetchProduct(request) async {
 
-    List<Wishlist> wishlistItems = [];
+    var response = await request.get(
+      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_owned_books/"
+    );
+
+    List<Book> listOwnedBooks = [];
     for (var d in response) {
       if (d != null) {
-        print(Wishlist.fromJson(d));
-        wishlistItems.add(Wishlist.fromJson(d));
+        listOwnedBooks.add(Book.fromJson(d));
       }
     }
-    return wishlistItems;
+    return listOwnedBooks;
   }
 
   @override
@@ -36,21 +36,25 @@ class _WishlistPageState extends State<WishlistPage> {
     return Scaffold(
       drawer: const LeftDrawer(),
       appBar: AppBar(
-        title: const Text('Wishlist'),
+        title: const Text('My Books'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: 
+        Padding(
           padding: const EdgeInsets.all(10.0),
-          child: FutureBuilder<List<Wishlist>>(
+          child: FutureBuilder<List<Book>>(
             future: fetchProduct(request),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Text('No books in wishlist');
-              } else {
+              } 
+              else if (snapshot.hasError) {
+                return const Text('Error fetching data');
+              } 
+              else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Text('No books in cart');
+              } 
+              else {
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
