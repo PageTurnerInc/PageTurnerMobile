@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
 
+
+import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
+
 class MenuItem {
   final String name;
   final Color color;
@@ -46,7 +49,8 @@ class MenuCard extends StatelessWidget {
           }
 
           else if (item.name == "Library") {
-            
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const RakPage()));
           }
 
           else if (item.name == "Wishlist") {
