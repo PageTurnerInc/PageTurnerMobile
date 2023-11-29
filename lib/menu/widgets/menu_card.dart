@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/review/screens/review_form.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
@@ -51,6 +52,11 @@ class MenuCard extends StatelessWidget {
 
           else if (item.name == "Wishlist") {
             
+          }
+
+          else if (item.name == "Review Placeholder") {
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const ReviewFormPage()));
           }
 
           else if (item.name == "Logout") {

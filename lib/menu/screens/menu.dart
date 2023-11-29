@@ -12,6 +12,7 @@ class MyHomePage extends StatelessWidget {
     MenuItem("Library", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Wishlist", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Logout", Colors.indigo, Icons.logout),
+    MenuItem("Review Placeholder", Colors.indigo, Icons.add_shopping_cart)
   ];
 
   @override
