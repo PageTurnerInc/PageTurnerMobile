@@ -116,9 +116,8 @@ class BookCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch to fill width
             children: [
-              // Image covering top 60% of the card
               Expanded(
-                flex: 7,
+                flex: 8,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
                   child: Image.network(
