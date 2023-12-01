@@ -1,11 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/review/screens/review_form.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 
@@ -38,10 +36,7 @@ class MenuCard extends StatelessWidget {
             );
           
           if (item.name == "Catalogue") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const BookCataloguePage())
-            );
+            
           }
           else if (item.name == "My Books") {
             Navigator.push(
@@ -66,13 +61,12 @@ class MenuCard extends StatelessWidget {
 
           } 
           else if (item.name == "Review Placeholder") {
-            Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const ReviewFormPage()));
+            
           }
 
           else if (item.name == "Logout") {
             final response = await request.logout(
-                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
+                "http://127.0.0.1:8080/auth/logout/");
             String message = response["message"];
             if (response['status']) {
               String uname = response["username"];
