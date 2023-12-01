@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/owned_book_card.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
+import 'package:page_turner_mobile/menu/screens/menu.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
@@ -17,10 +18,8 @@ class OwnedBooksPage extends StatefulWidget {
 
 class _OwnedBooksPageState extends State<OwnedBooksPage> {
   Future<List<Book>> fetchProduct(request) async {
-
-    var response = await request.get(
-      "http://127.0.0.1:8080/daftar_belanja/get_owned_books/"
-    );
+    var response = await request
+        .get("http://127.0.0.1:8080/daftar_belanja/get_owned_books/");
 
     List<Book> listOwnedBooks = [];
     for (var d in response) {
@@ -75,6 +74,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                   children: [
                     Text(
                       'My Books',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
@@ -84,6 +84,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                     SizedBox(height: 10),
                     Text(
                       'Welcome ${currentUser.fullName}',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
@@ -93,6 +94,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                     SizedBox(height: 10),
                     Text(
                       isPremium,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
@@ -110,16 +112,70 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
-                  } 
-                  else if (snapshot.hasError) {
-                    return const Text('Error fetching data');
-                  } 
-                  else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No books in cart');
-                  } 
-                  else {
+                  } else if (!snapshot.hasData ||
+                      snapshot.data!.isEmpty ||
+                      snapshot.hasError) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 100),
+                        Text(
+                          "Your don't have any books in your collection...",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Check out our extensive catalogue!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        SizedBox(
+                          width: 320,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyHomePage(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(5), // Rounded edges
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12), // Vertical padding
+                            ),
+                            child: Text(
+                              'Catalogue',
+                              style: TextStyle(
+                                fontSize: 18, // Font size
+                                fontWeight: FontWeight.bold, // Font weight
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
                     return GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,

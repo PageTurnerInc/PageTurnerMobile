@@ -87,7 +87,7 @@ class BookCard extends StatelessWidget {
                             onPressed: () {
                               _removeFromCart(context, request);
                               Navigator.pop(context);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const ShoppingCartPage(),

@@ -85,7 +85,7 @@ class BookCard extends StatelessWidget {
                             onPressed: () {
                               _deleteBook(context, request);
                               Navigator.pop(context);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const OwnedBooksPage(),
