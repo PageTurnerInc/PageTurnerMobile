@@ -7,11 +7,11 @@ class MyHomePage extends StatelessWidget {
 
   final List<MenuItem> items = [
     MenuItem("Catalogue", Colors.indigo, Icons.checklist),
-    MenuItem("My Books", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Shopping Cart", Colors.indigo, Icons.add_shopping_cart),
+    MenuItem("My Books", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Library", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Wishlist", Colors.indigo, Icons.add_shopping_cart),
-    MenuItem("Logout", Colors.red, Icons.logout),
+    MenuItem("Logout", const Color.fromARGB(255, 205, 28, 28) , Icons.logout),
   ];
 
   @override

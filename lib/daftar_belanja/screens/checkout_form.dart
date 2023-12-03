@@ -131,7 +131,7 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
                             }));
                         ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(
-                            content: Text(response["message"]),
+                            content: Text(response["message"].toString()),
                           ));
                         if (response['status'] == true) {
                           Navigator.pushReplacement(

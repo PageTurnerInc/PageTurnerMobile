@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -12,11 +11,11 @@ import 'package:provider/provider.dart';
 class BookCard extends StatelessWidget {
   final Book book;
 
-  const BookCard(this.book, {super.key}); // Constructor
+  const BookCard(this.book, {super.key});
 
-  Future<void> _deleteBook(BuildContext context, CookieRequest request) async {
+  Future<void> _addToCart(BuildContext context, CookieRequest request) async {
     await request.postJson(
-        'http://127.0.0.1:8080/daftar_belanja/delete_book_flutter/',
+        'http://127.0.0.1:8080/daftar_belanja/add_to_cart_flutter/',
         jsonEncode({
           "user": currentUser.user,
           "bookID": book.pk,
@@ -80,10 +79,36 @@ class BookCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            width: 150,
+                            width: 100,
                             child: ElevatedButton(
                               onPressed: () {
-                                // Handle Book Details
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    const Color.fromARGB(255, 31, 156, 35),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(5), // Rounded edges
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                              ),
+                              child: const Text(
+                                'Add to Wishlist',
+                                style: TextStyle(
+                                  fontSize: 12, // Font size
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
@@ -106,22 +131,16 @@ class BookCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 150,
+                            width: 100,
                             child: ElevatedButton(
                               onPressed: () {
-                                _deleteBook(context, request);
+                                _addToCart(context, request);
                                 Navigator.pop(context);
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OwnedBooksPage(),
-                                  ),
-                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                backgroundColor: const Color.fromARGB(255, 205, 28, 28),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 31, 156, 35),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(5), // Rounded edges
@@ -130,7 +149,7 @@ class BookCard extends StatelessWidget {
                                     const EdgeInsets.symmetric(vertical: 12),
                               ),
                               child: const Text(
-                                'Delete Book',
+                                'Add to Cart',
                                 style: TextStyle(
                                   fontSize: 12, // Font size
                                   fontWeight: FontWeight.bold,
