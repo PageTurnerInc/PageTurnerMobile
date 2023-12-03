@@ -9,6 +9,8 @@ Account currentUser = Account(
                         isPremium: "Null",
                       );
 
+int currentPage = 0;
+
 class Account {
     int user;
     String fullName;

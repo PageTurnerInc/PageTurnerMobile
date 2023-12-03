@@ -51,7 +51,10 @@ class BookCard extends StatelessWidget {
                   automaticallyImplyLeading: false,
                   title: Text(
                     title,
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   actions: [
                     IconButton(
@@ -75,24 +78,62 @@ class BookCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              // Handle Book Details
-                            },
-                            child: const Text('Book Details'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              _deleteBook(context, request);
-                              Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const OwnedBooksPage(),
+                          SizedBox(
+                            width: 150,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Handle Book Details
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.cyan,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(5), // Rounded edges
                                 ),
-                              );
-                            },
-                            child: const Text('Delete Book'),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12),
+                              ),
+                              child: const Text(
+                                'Book Details',
+                                style: TextStyle(
+                                  fontSize: 12, // Font size
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _deleteBook(context, request);
+                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const OwnedBooksPage(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(5), // Rounded edges
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12),
+                              ),
+                              child: const Text(
+                                'Delete Book',
+                                style: TextStyle(
+                                  fontSize: 12, // Font size
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

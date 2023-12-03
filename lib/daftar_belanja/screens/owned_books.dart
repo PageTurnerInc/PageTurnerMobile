@@ -1,13 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/owned_book_card.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 
 class OwnedBooksPage extends StatefulWidget {
   const OwnedBooksPage({Key? key}) : super(key: key);
@@ -38,10 +38,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
     if (currentUser.isPremium == "Y") isPremium = "Premium Account";
 
     return Scaffold(
-      drawer: const LeftDrawer(),
-      appBar: AppBar(
-        title: const Text('My Books'),
-      ),
+      bottomNavigationBar: NavBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

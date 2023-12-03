@@ -1,13 +1,14 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/checkout_form.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({Key? key}) : super(key: key);
@@ -38,16 +39,26 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     if (currentUser.isPremium == "Y") isPremium = "Premium Account";
 
     return Scaffold(
-      drawer: const LeftDrawer(),
-      appBar: AppBar(
-        title: const Text('Shopping Cart'),
+      bottomNavigationBar: NavBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CheckoutFormPage(),
+            ),
+          );
+        },
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add_shopping_cart),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Stack(
               alignment: Alignment.center,
-              children: <Widget>[
+              children: [
                 Image.asset(
                   'assets/images/shopping_cart_bg.webp',
                   fit: BoxFit.cover,
@@ -105,6 +116,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 )
               ],
             ),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder<List<Book>>(
@@ -152,11 +164,14 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white, backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                              backgroundColor: const Color.fromARGB(255, 31, 156, 35),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5), // Rounded edges
+                                borderRadius:
+                                    BorderRadius.circular(5), // Rounded edges
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 12), // Vertical padding
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12), // Vertical padding
                             ),
                             child: Text(
                               'Catalogue',
@@ -189,6 +204,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 },
               ),
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),
