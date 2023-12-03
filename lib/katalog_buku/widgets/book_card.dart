@@ -31,6 +31,9 @@ class BookCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        double screenWidth = MediaQuery.of(context).size.width;
+        double buttonWidth = screenWidth * 0.2;
+
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -79,7 +82,7 @@ class BookCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            width: 100,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.pop(context);
@@ -98,14 +101,14 @@ class BookCard extends StatelessWidget {
                               child: const Text(
                                 'Add to Wishlist',
                                 style: TextStyle(
-                                  fontSize: 12, // Font size
+                                  fontSize: 10, // Font size
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: 100,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.pop(context);
@@ -124,14 +127,14 @@ class BookCard extends StatelessWidget {
                               child: const Text(
                                 'Book Details',
                                 style: TextStyle(
-                                  fontSize: 12, // Font size
+                                  fontSize: 10, // Font size
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: 100,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 _addToCart(context, request);
@@ -151,7 +154,7 @@ class BookCard extends StatelessWidget {
                               child: const Text(
                                 'Add to Cart',
                                 style: TextStyle(
-                                  fontSize: 12, // Font size
+                                  fontSize: 10, // Font size
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
