@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/shopping_cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
 
@@ -27,11 +28,10 @@ class _NavBarState extends State<NavBar> {
         );
         break;
       case 1:
-        // Move to catalogue
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => MyHomePage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BookCataloguePage()),
+        );
         break;
       case 2:
         Navigator.push(
@@ -74,7 +74,7 @@ class _NavBarState extends State<NavBar> {
           IconButton(
             icon: const Icon(Icons.library_add),
             onPressed: () => _onItemTapped(context, 1),
-            // color: currentPage == 1 ? const Color.fromARGB(255, 33, 44, 243) : null,
+            color: currentPage == 1 ? const Color.fromARGB(255, 33, 44, 243) : null,
           ),
           // Shopping Cart
           IconButton(

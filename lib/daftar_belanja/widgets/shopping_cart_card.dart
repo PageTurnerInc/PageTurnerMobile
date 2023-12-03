@@ -88,7 +88,8 @@ class BookCard extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                backgroundColor: Colors.cyan,
+                                backgroundColor:
+                                    const Color.fromARGB(255, 31, 156, 35),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(5), // Rounded edges
@@ -121,7 +122,8 @@ class BookCard extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                backgroundColor: Colors.green,
+                                backgroundColor:
+                                    const Color.fromARGB(255, 205, 28, 28),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(5), // Rounded edges
@@ -167,10 +169,6 @@ class BookCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () async {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-                SnackBar(content: Text("Kamu telah menekan buku $title!")));
           _showModal(context, request);
         },
         child: Container(

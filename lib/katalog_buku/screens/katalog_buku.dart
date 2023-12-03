@@ -1,25 +1,24 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
-import 'package:page_turner_mobile/daftar_belanja/widgets/owned_book_card.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
+import 'package:page_turner_mobile/katalog_buku/widgets/book_card.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
-import 'package:provider/provider.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-class OwnedBooksPage extends StatefulWidget {
-  const OwnedBooksPage({Key? key}) : super(key: key);
+class BookCataloguePage extends StatefulWidget {
+  const BookCataloguePage({Key? key}) : super(key: key);
 
   @override
-  _OwnedBooksPageState createState() => _OwnedBooksPageState();
+  // ignore: library_private_types_in_public_api
+  _BookCataloguePageState createState() => _BookCataloguePageState();
 }
 
-class _OwnedBooksPageState extends State<OwnedBooksPage> {
+class _BookCataloguePageState extends State<BookCataloguePage> {
   Future<List<Book>> fetchProduct(request) async {
-    var response = await request
-        .get("http://127.0.0.1:8080/daftar_belanja/get_owned_books/");
+    var response = await request.get("http://127.0.0.1:8080/katalog/json/");
 
     List<Book> listOwnedBooks = [];
     for (var d in response) {
@@ -44,9 +43,9 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
           children: [
             Stack(
               alignment: Alignment.center,
-              children: <Widget>[
+              children: [
                 Image.asset(
-                  'assets/images/owned_book_bg.jpg',
+                  'assets/images/shopping_cart_bg.webp',
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: 200, // Adjust the height as needed
@@ -70,7 +69,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'My Books',
+                      'Catalogue',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 40,
@@ -102,6 +101,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                 )
               ],
             ),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder<List<Book>>(
@@ -115,10 +115,10 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      children: const [
                         SizedBox(height: 100),
                         Text(
-                          "Your don't have any books in your collection...",
+                          'Error fetching data...',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 30,
@@ -127,46 +127,6 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          'Check out our extensive catalogue!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        SizedBox(
-                          width: 320,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BookCataloguePage(),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(5), // Rounded edges
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 12), // Vertical padding
-                            ),
-                            child: Text(
-                              'Catalogue',
-                              style: TextStyle(
-                                fontSize: 18, // Font size
-                                fontWeight: FontWeight.bold, // Font weight
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     );
                   } else {
@@ -189,6 +149,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                 },
               ),
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),

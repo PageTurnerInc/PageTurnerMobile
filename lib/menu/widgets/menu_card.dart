@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -30,12 +31,11 @@ class MenuCard extends StatelessWidget {
         // Area responsive terhadap sentuhan
         onTap: () async {
           if (item.name == "Catalogue") {
-          } else if (item.name == "My Books") {
-            currentPage = 3;
+            currentPage = 1;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OwnedBooksPage(),
+                builder: (context) => const BookCataloguePage(),
               ),
             );
           } else if (item.name == "Shopping Cart") {
@@ -44,6 +44,14 @@ class MenuCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const ShoppingCartPage(),
+              ),
+            );
+          } else if (item.name == "My Books") {
+            currentPage = 3;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OwnedBooksPage(),
               ),
             );
           } else if (item.name == "Library") {

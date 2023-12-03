@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/checkout_form.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
-import 'package:page_turner_mobile/menu/screens/menu.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
@@ -159,7 +159,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MyHomePage(),
+                                  builder: (context) => BookCataloguePage(),
                                 ),
                               );
                             },
