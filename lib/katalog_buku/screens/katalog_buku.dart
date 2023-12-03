@@ -18,7 +18,8 @@ class BookCataloguePage extends StatefulWidget {
 
 class _BookCataloguePageState extends State<BookCataloguePage> {
   Future<List<Book>> fetchProduct(request) async {
-    var response = await request.get("http://127.0.0.1:8080/katalog/json/");
+    var response = await request
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/katalog/json/");
 
     List<Book> listOwnedBooks = [];
     for (var d in response) {

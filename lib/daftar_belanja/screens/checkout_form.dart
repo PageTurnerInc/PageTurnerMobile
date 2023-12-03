@@ -124,7 +124,7 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         final response = await request.postJson(
-                            "http://127.0.0.1:8080/daftar_belanja/confirm_payment_flutter/",
+                            "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/confirm_payment_flutter/",
                             jsonEncode(<String, String>{
                               'username': _username.toString(),
                               'payment': _payment.toString(),

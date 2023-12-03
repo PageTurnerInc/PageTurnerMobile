@@ -17,7 +17,7 @@ class BookCard extends StatelessWidget {
   Future<void> _removeFromCart(
       BuildContext context, CookieRequest request) async {
     await request.postJson(
-        'http://127.0.0.1:8080/daftar_belanja/remove_from_cart_flutter/',
+        'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/remove_from_cart_flutter/',
         jsonEncode({
           "user": currentUser.user,
           "bookID": book.pk,
