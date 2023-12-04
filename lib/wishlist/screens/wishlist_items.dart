@@ -1,10 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/wishlist/screens/notes_form.dart';
+import 'package:page_turner_mobile/wishlist/screens/show_notes.dart';
+import 'package:page_turner_mobile/wishlist/screens/wishlist_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/wishlist/models/wishlist.dart';
-import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 
 class WishlistPage extends StatefulWidget {
@@ -29,6 +31,28 @@ class _WishlistPageState extends State<WishlistPage> {
     return wishlistItems;
   }
 
+  void _addNotes() {
+    print("Add Notes clicked");
+    // Add your functionality for adding notes
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NotesFormPage(),
+      ),
+    );
+  }
+
+  void _viewNotes() {
+    print("View Notes clicked");
+    // Add your functionality for viewing notes
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NotesPage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -37,6 +61,18 @@ class _WishlistPageState extends State<WishlistPage> {
       drawer: const LeftDrawer(),
       appBar: AppBar(
         title: const Text('Wishlist'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.note_add),
+            onPressed: _addNotes,
+            tooltip: 'Add Notes',
+          ),
+          IconButton(
+            icon: const Icon(Icons.notes),
+            onPressed: _viewNotes,
+            tooltip: 'View Notes',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -62,7 +98,7 @@ class _WishlistPageState extends State<WishlistPage> {
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return BookCard(snapshot.data![index]);
+                    return WishlistCard(snapshot.data![index]);
                   },
                 );
               }

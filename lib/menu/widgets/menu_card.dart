@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/review/screens/review_form.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
@@ -69,9 +70,8 @@ class MenuCard extends StatelessWidget {
                 builder: (context) => const WishlistPage(),
               ),
             );
-            
-          }
 
+          } 
           else if (item.name == "Logout") {
             final response = await request.logout(
                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
