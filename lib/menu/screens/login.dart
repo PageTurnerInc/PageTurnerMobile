@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
@@ -35,47 +35,64 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.3;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.4, // Top 40% of the screen
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/shopping_cart_bg.webp'),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/shopping_cart_bg.webp',
                   fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: screenHeight * 0.5,
                 ),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(0, 0, 0, 0.65),
-                    Color.fromRGBO(0, 0, 0, 0.85),
-                  ],
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  'Welcome to Page Turner',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10.0,
-                        color: Colors.black.withOpacity(0.7),
-                        offset: const Offset(5.0, 5.0),
-                      ),
-                    ],
+                Container(
+                  width: double.infinity,
+                  height: screenHeight * 0.5,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(0, 0, 0, 0.65),
+                        Color.fromRGBO(0, 0, 0, 0.85),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+                const Column(
+                  children: [
+                    Center(
+                      child: Text(
+                        'Welcome to...',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        'Page Turner',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -87,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Username',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                   ),
@@ -97,65 +114,79 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       labelText: 'Password',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                     obscureText: true,
                   ),
                   const SizedBox(height: 24.0),
-                  ElevatedButton(
-                    onPressed: () async {
-                      String username = _usernameController.text;
-                      String password = _passwordController.text;
+                  SizedBox(
+                    width: buttonWidth,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        String username = _usernameController.text;
+                        String password = _passwordController.text;
 
-                      final response = await request.login(
-                          "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/login/", {
-                        'username': username,
-                        'password': password,
-                      });
+                        final response = await request.login(
+                            "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/login/",
+                            {
+                              'username': username,
+                              'password': password,
+                            });
 
-                      if (request.loggedIn) {
-                        String message = response['message'];
-                        String uname = response['username'];
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyHomePage()),
-                        );
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(SnackBar(
-                              content: Text("$message Selamat datang, $uname.")));
+                        if (request.loggedIn) {
+                          String message = response['message'];
+                          String uname = response['username'];
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                          );
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                                content:
+                                    Text("$message Selamat datang, $uname.")));
 
-                        currentUser = Account(
-                          user: response["user"],
-                          fullName: response["fullname"],
-                          email: response["email"],
-                          isPremium: response["isPremium"],
-                        );
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: const Text('Login Gagal'),
-                            content: Text(response['message']),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                          currentUser = Account(
+                            user: response["user"],
+                            fullName: response["fullname"],
+                            email: response["email"],
+                            isPremium: response["isPremium"],
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Login Gagal'),
+                              content: Text(response['message']),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: const Color.fromARGB(255, 31, 156, 35),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5), // Rounded edges
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 18, // Font size
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    child: const Text('Login'),
                   ),
                 ],
               ),

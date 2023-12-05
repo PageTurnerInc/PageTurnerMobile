@@ -34,11 +34,11 @@ class MyHomePage extends StatelessWidget {
                   'assets/images/shopping_cart_bg.webp',
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: screenHeight * 0.45, // Adjust the height as needed
+                  height: screenHeight * 0.45,
                 ),
                 Container(
                   width: double.infinity,
-                  height: screenHeight * 0.45, // Ensure this matches the image's height
+                  height: screenHeight * 0.45,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
