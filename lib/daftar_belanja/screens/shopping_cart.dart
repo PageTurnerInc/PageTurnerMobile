@@ -20,7 +20,7 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Future<List<Book>> fetchProduct(request) async {
     var response = await request
-        .get("http://127.0.0.1:8080/daftar_belanja/get_shopping_cart/");
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/");
 
     List<Book> listShoppingCart = [];
     for (var d in response) {
@@ -34,24 +34,42 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.92;
 
     String isPremium = "Regular Account";
     if (currentUser.isPremium == "Y") isPremium = "Premium Account";
 
     return Scaffold(
       bottomNavigationBar: NavBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CheckoutFormPage(),
-            ),
-          );
-        },
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        child: Icon(Icons.add_shopping_cart),
+      floatingActionButton: SizedBox(
+        width: buttonWidth,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CheckoutFormPage(),
+              ),
+            );
+          },
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white,
+          child: Row (
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Checkout Cart",
+                style: TextStyle(
+                  fontSize: 18, // Font size
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: 10),
+              Icon(Icons.add_shopping_cart),
+            ]
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -116,7 +134,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 )
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder<List<Book>>(

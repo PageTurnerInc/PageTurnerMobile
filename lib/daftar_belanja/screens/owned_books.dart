@@ -19,7 +19,7 @@ class OwnedBooksPage extends StatefulWidget {
 class _OwnedBooksPageState extends State<OwnedBooksPage> {
   Future<List<Book>> fetchProduct(request) async {
     var response = await request
-        .get("http://127.0.0.1:8080/daftar_belanja/get_owned_books/");
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_owned_books/");
 
     List<Book> listOwnedBooks = [];
     for (var d in response) {

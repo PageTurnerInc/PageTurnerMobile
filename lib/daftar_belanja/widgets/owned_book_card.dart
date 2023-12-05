@@ -16,7 +16,7 @@ class BookCard extends StatelessWidget {
 
   Future<void> _deleteBook(BuildContext context, CookieRequest request) async {
     await request.postJson(
-        'http://127.0.0.1:8080/daftar_belanja/delete_book_flutter/',
+        'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/delete_book_flutter/',
         jsonEncode({
           "user": currentUser.user,
           "bookID": book.pk,
@@ -32,6 +32,9 @@ class BookCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        double screenWidth = MediaQuery.of(context).size.width;
+        double buttonWidth = screenWidth * 0.3;
+
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -80,7 +83,7 @@ class BookCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            width: 150,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 // Handle Book Details
@@ -106,7 +109,7 @@ class BookCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 150,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 _deleteBook(context, request);
