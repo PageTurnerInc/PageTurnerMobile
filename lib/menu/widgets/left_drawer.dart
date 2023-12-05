@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/shopping_cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
+import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -55,7 +56,7 @@ class LeftDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyHomePage(),
-                  ));
+              ));
             },
           ),
           ListTile(
@@ -105,13 +106,33 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Wishlist'),
             // Bagian redirection ke ShopFormPage
             onTap: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WishlistPage(),
-                ),
-              );
-              
+              if (currentUser.isPremium == "Y") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WishlistPage(),
+                  ),
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Akses Terbatas"),
+                      content: const Text(
+                          "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text("OK"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
           ),
           ListTile(

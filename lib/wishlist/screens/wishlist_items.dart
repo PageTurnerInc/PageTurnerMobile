@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/wishlist/screens/notes_form.dart';
 import 'package:page_turner_mobile/wishlist/screens/show_notes.dart';
-import 'package:page_turner_mobile/wishlist/screens/wishlist_card.dart';
+import 'package:page_turner_mobile/wishlist/widgets/wishlist_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/wishlist/models/wishlist.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 
 class WishlistPage extends StatefulWidget {
   const WishlistPage({Key? key}) : super(key: key);
@@ -58,7 +58,7 @@ class _WishlistPageState extends State<WishlistPage> {
     final request = context.watch<CookieRequest>();
 
     return Scaffold(
-      drawer: const LeftDrawer(),
+      bottomNavigationBar: const NavBar(),
       appBar: AppBar(
         title: const Text('Wishlist'),
         actions: <Widget>[

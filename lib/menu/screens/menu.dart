@@ -1,36 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/menu/widgets/menu_card.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final List<MenuItem> items = [
     MenuItem("Catalogue", Colors.indigo, Icons.checklist),
-    MenuItem("My Books", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Shopping Cart", Colors.indigo, Icons.add_shopping_cart),
+    MenuItem("My Books", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Library", Colors.indigo, Icons.add_shopping_cart),
     MenuItem("Wishlist", Colors.indigo, Icons.add_shopping_cart),
-    MenuItem("Logout", Colors.indigo, Icons.logout),
-    MenuItem("Review Placeholder", Colors.indigo, Icons.add_shopping_cart)
+    MenuItem("Logout", const Color.fromARGB(255, 205, 28, 28) , Icons.logout),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const LeftDrawer(),
-      appBar: AppBar(
-        title: const Text(
-          'Page Turner',
-        ),
-      ),
+      bottomNavigationBar: const NavBar(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
           padding: const EdgeInsets.all(10.0), // Set padding dari halaman
           child: Column(
             // Widget untuk menampilkan children secara vertikal
-            children: <Widget>[
+            children: [
               const Padding(
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai

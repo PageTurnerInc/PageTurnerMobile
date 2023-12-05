@@ -1,12 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/review/screens/review_form.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
+import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
-import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/shopping_cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 
@@ -31,48 +31,67 @@ class MenuCard extends StatelessWidget {
       child: InkWell(
         // Area responsive terhadap sentuhan
         onTap: () async {
-          // Memunculkan SnackBar ketika diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
-            );
-          
           if (item.name == "Catalogue") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const BookCataloguePage())
-            );
-          }
-          else if (item.name == "My Books") {
+            currentPage = 1;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OwnedBooksPage(),
+                builder: (context) => const BookCataloguePage(),
               ),
             );
-          } 
-          else if (item.name == "Shopping Cart") {
+          } else if (item.name == "Shopping Cart") {
+            currentPage = 2;
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const ShoppingCartPage(),
               ),
             );
-          } 
-          else if (item.name == "Library") {
+          } else if (item.name == "Library") {
+          } else if (item.name == "Wishlist") {
+            if (currentUser.isPremium == "Y") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WishlistPage(),
+                ),
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Akses Terbatas"),
+                    content: const Text(
+                        "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
 
-          } 
-          else if (item.name == "Wishlist") {
+          } else if (item.name == "Logout") {
+            final response = await request.logout(
+                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
+          } else if (item.name == "My Books") {
+            currentPage = 3;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WishlistPage(),
+                builder: (context) => const OwnedBooksPage(),
               ),
             );
-
-          } 
-          else if (item.name == "Logout") {
+          } else if (item.name == "Library") {
+          } else if (item.name == "Wishlist") {
+          } else if (item.name == "Review Placeholder") {
+          } else if (item.name == "Logout") {
             final response = await request.logout(
                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
             String message = response["message"];

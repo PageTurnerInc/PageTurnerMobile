@@ -3,20 +3,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
-import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
 
-  const BookCard(this.book, {super.key});
+  const BookCard(this.book, {super.key}); // Constructor
 
-  Future<void> _addToCart(BuildContext context, CookieRequest request) async {
+  Future<void> _deleteBook(BuildContext context, CookieRequest request) async {
     await request.postJson(
-        'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/add_to_cart_flutter/',
+        'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/delete_book_flutter/',
         jsonEncode({
           "user": currentUser.user,
           "bookID": book.pk,
@@ -80,75 +80,10 @@ class BookCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            width: 100,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (currentUser.isPremium == "Y") {
-                                  print("masuk");
-                                  final response = await request.postJson(
-                                      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/add_to_wishlist_flutter/",
-                                      jsonEncode(<String, String>{
-                                        'bookID': book.pk.toString(),
-                                      }));
-                                  if (response['status'] == 'success') {
-                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                      content: Text("Wishlist anda berhasil disimpan!"),
-                                    ));
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => WishlistPage()),
-                                    );
-                                  }
-                                } 
-                                else{
-                                  print("masuk");
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text("Akses Terbatas"),
-                                        content: const Text(
-                                            "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text("OK"),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-
-                                }
-                              
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                    const Color.fromARGB(255, 31, 156, 35),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(5), // Rounded edges
-                                ),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                              ),
-                              child: const Text(
-                                'Add to Wishlist',
-                                style: TextStyle(
-                                  fontSize: 12, // Font size
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 100,
+                            width: 150,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                // Handle Book Details
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
@@ -171,16 +106,22 @@ class BookCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 100,
+                            width: 150,
                             child: ElevatedButton(
                               onPressed: () {
-                                _addToCart(context, request);
+                                _deleteBook(context, request);
                                 Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OwnedBooksPage(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                backgroundColor:
-                                    const Color.fromARGB(255, 31, 156, 35),
+                                backgroundColor: const Color.fromARGB(255, 205, 28, 28),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(5), // Rounded edges
@@ -189,7 +130,7 @@ class BookCard extends StatelessWidget {
                                     const EdgeInsets.symmetric(vertical: 12),
                               ),
                               child: const Text(
-                                'Add to Cart',
+                                'Delete Book',
                                 style: TextStyle(
                                   fontSize: 12, // Font size
                                   fontWeight: FontWeight.bold,

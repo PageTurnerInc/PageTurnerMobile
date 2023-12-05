@@ -1,33 +1,34 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/checkout_form.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
-import 'package:page_turner_mobile/daftar_belanja/widgets/owned_book_card.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 
-class OwnedBooksPage extends StatefulWidget {
-  const OwnedBooksPage({Key? key}) : super(key: key);
+class ShoppingCartPage extends StatefulWidget {
+  const ShoppingCartPage({Key? key}) : super(key: key);
 
   @override
-  _OwnedBooksPageState createState() => _OwnedBooksPageState();
+  _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
 
-class _OwnedBooksPageState extends State<OwnedBooksPage> {
+class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Future<List<Book>> fetchProduct(request) async {
     var response = await request
-        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_owned_books/");
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/");
 
-    List<Book> listOwnedBooks = [];
+    List<Book> listShoppingCart = [];
     for (var d in response) {
       if (d != null) {
-        listOwnedBooks.add(Book.fromJson(d));
+        listShoppingCart.add(Book.fromJson(d));
       }
     }
-    return listOwnedBooks;
+    return listShoppingCart;
   }
 
   @override
@@ -39,14 +40,27 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
 
     return Scaffold(
       bottomNavigationBar: NavBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CheckoutFormPage(),
+            ),
+          );
+        },
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add_shopping_cart),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Stack(
               alignment: Alignment.center,
-              children: <Widget>[
+              children: [
                 Image.asset(
-                  'assets/images/owned_book_bg.jpg',
+                  'assets/images/shopping_cart_bg.webp',
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: 200, // Adjust the height as needed
@@ -70,7 +84,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'My Books',
+                      'Shopping Cart',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 40,
@@ -102,6 +116,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                 )
               ],
             ),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder<List<Book>>(
@@ -118,7 +133,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                       children: [
                         SizedBox(height: 100),
                         Text(
-                          "Your don't have any books in your collection...",
+                          'Your Shopping Cart is Empty...',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 30,
@@ -150,7 +165,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Colors.green,
+                              backgroundColor: const Color.fromARGB(255, 31, 156, 35),
                               shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(5), // Rounded edges
@@ -189,6 +204,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                 },
               ),
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),

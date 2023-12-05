@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/wishlist/widgets/notes_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/wishlist/models/notes.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({Key? key}) : super(key: key);
@@ -43,11 +42,12 @@ class _NotesPageState extends State<NotesPage> {
       appBar: AppBar(
         title: const Text('Notes'),
       ),
-      drawer: const LeftDrawer(),
+      bottomNavigationBar: const NavBar(),
       body: FutureBuilder<List<Notes>>(
         future: fetchNotes(request),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
+            
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -63,36 +63,7 @@ class _NotesPageState extends State<NotesPage> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var note = snapshot.data![index];
-                return Card(
-                  child: ListTile(
-                    title: Text(note.fields.title,
-                        style: const TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold)),
-                    subtitle: Text(note.fields.notes,
-                        style: const TextStyle(fontSize: 16.0)),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () async {
-                        final response = await request.postJson(
-                            "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/delete_note_flutter/",
-                            jsonEncode(<String, String>{
-                              'noteID': note.pk.toString(),
-                            }));
-                        if (response['status'] == 'success') {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text("Note anda berhasil dihapus!"),
-                          ));
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NotesPage()),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                );
+                return NotesCard(note);
               },
             );
           }

@@ -6,6 +6,7 @@ import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:page_turner_mobile/menu/models/account.dart';
 
 class BookPage extends StatelessWidget {
   final Book book;
@@ -16,56 +17,65 @@ class BookPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(
-          onPressed: () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const BookCataloguePage())),
-        ),
-        title: const Text("Detail Buku")
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+        appBar: AppBar(
+            leading: BackButton(
+              onPressed: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const BookCataloguePage())),
+            ),
+            title: const Text("Detail Buku")),
+        body: SingleChildScrollView(
+            child: Column(
           children: [
-            Text(
-              book.fields.bookTitle
-            ),
-            
-            Text(
-              "Year of publication: ${book.fields.yearOfPublication}"
-            ),
-
+            Text(book.fields.bookTitle),
+            Text("Year of publication: ${book.fields.yearOfPublication}"),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text(
-                book.fields.bookAuthor
-              )
-            ),
-
-            ElevatedButton(
-              onPressed: () async {
-                  final response = await request.postJson(
-                  "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/add_to_wishlist_flutter/",
-                  jsonEncode(<String, String>{
-                      'bookID': book.pk.toString(),
-                      
-                  }));
-                  if (response['status'] == 'success') {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(
-                      content: Text("Wishlist anda berhasil disimpan!"),
-                      ));
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => WishlistPage()),
-                      );
-                  }
-              },
-              child: const Text('Add to Wishlist'),
-            ),
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(book.fields.bookAuthor)),
+            // ElevatedButton(
+              // onPressed: () async {
+              //   if (currentUser.isPremium == "Y") {
+              //     print("masuk");
+              //     final response = await request.postJson(
+              //         "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/add_to_wishlist_flutter/",
+              //         jsonEncode(<String, String>{
+              //           'bookID': book.pk.toString(),
+              //         }));
+              //     if (response['status'] == 'success') {
+              //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              //         content: Text("Wishlist anda berhasil disimpan!"),
+              //       ));
+              //       Navigator.pushReplacement(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => WishlistPage()),
+              //       );
+              //     }
+              //   } 
+              //   print("masuk");
+              //   showDialog(
+              //     context: context,
+              //     builder: (BuildContext context) {
+              //       return AlertDialog(
+              //         title: const Text("Akses Terbatas"),
+              //         content: const Text(
+              //             "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
+              //         actions: <Widget>[
+              //           TextButton(
+              //             child: const Text("OK"),
+              //             onPressed: () {
+              //               Navigator.of(context).pop();
+              //             },
+              //           ),
+              //         ],
+              //       );
+              //     },
+              //   );
+              
+              // },
+            //   child: const Text('Add to Wishlist'),
+            // ),
           ],
-        )
-      )
-    );
+        )));
   }
 }
