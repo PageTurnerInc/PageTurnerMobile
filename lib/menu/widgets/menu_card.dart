@@ -1,12 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/review/screens/review_form.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
+import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
-import 'package:page_turner_mobile/daftar_belanja/screens/cart.dart';
+import 'package:page_turner_mobile/daftar_belanja/screens/shopping_cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 
 class MenuItem {
@@ -26,51 +26,37 @@ class MenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Material(
-      color: item.color,
       child: InkWell(
         // Area responsive terhadap sentuhan
         onTap: () async {
-          // Memunculkan SnackBar ketika diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
-            );
-          
           if (item.name == "Catalogue") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const BookCataloguePage())
-            );
-          }
-          else if (item.name == "My Books") {
+            currentPage = 1;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OwnedBooksPage(),
+                builder: (context) => const BookCataloguePage(),
               ),
             );
-          } 
-          else if (item.name == "Shopping Cart") {
+          } else if (item.name == "Shopping Cart") {
+            currentPage = 2;
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const ShoppingCartPage(),
               ),
             );
-          } 
-          else if (item.name == "Library") {
-
-          } 
-          else if (item.name == "Wishlist") {
-
-          } 
-          else if (item.name == "Review Placeholder") {
-            Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => const ReviewFormPage()));
-          }
-
-          else if (item.name == "Logout") {
+          } else if (item.name == "My Books") {
+            currentPage = 3;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OwnedBooksPage(),
+              ),
+            );
+          } else if (item.name == "Library") {
+          } else if (item.name == "Wishlist") {
+          } else if (item.name == "Review Placeholder") {
+          } else if (item.name == "Logout") {
             final response = await request.logout(
                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
             String message = response["message"];
@@ -91,24 +77,37 @@ class MenuCard extends StatelessWidget {
           }
         },
         child: Container(
-          // Container untuk menyimpan Icon dan Text
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
+          decoration: BoxDecoration(
+            color: item.color,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 0,
+                blurRadius: 6,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    item.icon,
+                    color: Colors.white,
+                    size: 30.0,
+                  ),
+                  const Padding(padding: EdgeInsets.all(3)),
+                  Text(
+                    item.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
