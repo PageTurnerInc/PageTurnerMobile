@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/review/models/review.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -42,85 +43,65 @@ class _ReviewsPageState extends State<ReviewsPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth = screenWidth * 0.92;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Reviews & Ratings',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.indigo[900],
-        foregroundColor: Colors.white,
       ),
 
-      body: FutureBuilder(
-        future: fetchReviews(), 
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (!snapshot.hasData) {
-              return const Column(
-                children: [
-                  Text(
-                    "No Reviews & Ratings Yet",
-                    style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
-                  ),
-                  SizedBox(height: 8,)
-                ],
-              );
-            } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (_, index) => InkWell(
-                  child: Card(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12
+      bottomNavigationBar: NavBar(),
+
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.network(
+                  widget.book.fields.imageUrlL,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 300, // Adjust the height as needed
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 300, // Ensure this matches the image's height
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(0, 0, 0, 0.65),
+                        Color.fromRGBO(0, 0, 0, 0.85),
+                      ],
                     ),
-                    
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.person,
-                                color: Colors.blue,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                "${snapshot.data![index].fields.reviewer}",
-                                style: const TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 10),
-                          Text(
-                            "${snapshot.data![index].fields.date}"
-                          ),
-
-                          const SizedBox(height: 20),
-                          Text(
-                            "${snapshot.data![index].fields.comment}"
-                          ),
-                        ],
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.book.fields.bookTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                    ),
-                  ),
+                    )
+                  ],
                 )
-              );
-            }
-          }
-        }
-      ),
+              ]
+            )
+          ],
+        ),
+      )
     );
   }
 }
