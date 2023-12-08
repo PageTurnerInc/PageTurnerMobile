@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
+import 'package:page_turner_mobile/review/widgets/review_bar.dart';
 
 class BookPage extends StatelessWidget {
   final Book book;
@@ -35,6 +36,8 @@ class BookPage extends StatelessWidget {
                 book.fields.bookAuthor
               )
             ),
+
+            ReviewBar(book: book)
           ],
         )
       )
