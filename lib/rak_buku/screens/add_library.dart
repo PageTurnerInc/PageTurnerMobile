@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-// TODO: Impor drawer yang sudah dibuat sebelumnya
 import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
+import 'package:page_turner_mobile/menu/models/account.dart';
+
+
 
 class AddLibrary extends StatefulWidget {
   const AddLibrary({super.key});
@@ -94,10 +96,9 @@ class _AddLibraryState extends State<AddLibrary> {
                             // Kirim ke Django dan tunggu respons
                             // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                             final response = await request.postJson(
-                            "http://localhost:8000/create-flutter/",
+                            "https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/create-rak-flutter/",
                             jsonEncode(<String, String>{
                                 'name': _name,
-                                'amount': _amount.toString(),
                                 'description': _description,
                                 // TODO: Sesuaikan field data sesuai dengan aplikasimu
                             }));

@@ -16,7 +16,7 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Future<List<Book>> fetchProduct(request) async {
     var response = await request.get(
-      "http://127.0.0.1:8080/daftar_belanja/get_shopping_cart/"
+      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/"
     );
 
     List<Book> listShoppingCart = [];
