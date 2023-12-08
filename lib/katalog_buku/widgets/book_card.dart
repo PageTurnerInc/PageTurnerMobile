@@ -84,6 +84,7 @@ class BookCard extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (currentUser.isPremium == "Y") {
+                                  currentPage = 4;
                                   print("masuk");
                                   final response = await request.postJson(
                                       "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/add_to_wishlist_flutter/",
@@ -91,16 +92,18 @@ class BookCard extends StatelessWidget {
                                         'bookID': book.pk.toString(),
                                       }));
                                   if (response['status'] == 'success') {
-                                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                      content: Text("Wishlist anda berhasil disimpan!"),
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Wishlist anda berhasil disimpan!"),
                                     ));
                                     Navigator.pushReplacement(
                                       context,
-                                      MaterialPageRoute(builder: (context) => WishlistPage()),
+                                      MaterialPageRoute(
+                                          builder: (context) => WishlistPage()),
                                     );
                                   }
-                                } 
-                                else{
+                                } else {
                                   print("masuk");
                                   showDialog(
                                     context: context,
@@ -120,9 +123,7 @@ class BookCard extends StatelessWidget {
                                       );
                                     },
                                   );
-
                                 }
-                              
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,

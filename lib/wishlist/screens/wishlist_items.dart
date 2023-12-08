@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/wishlist/screens/notes_form.dart';
 import 'package:page_turner_mobile/wishlist/screens/show_notes.dart';
+
 import 'package:page_turner_mobile/wishlist/widgets/wishlist_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -31,27 +32,6 @@ class _WishlistPageState extends State<WishlistPage> {
     return wishlistItems;
   }
 
-  void _addNotes() {
-    print("Add Notes clicked");
-    // Add your functionality for adding notes
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const NotesFormPage(),
-      ),
-    );
-  }
-
-  void _viewNotes() {
-    print("View Notes clicked");
-    // Add your functionality for viewing notes
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const NotesPage(),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,52 +39,120 @@ class _WishlistPageState extends State<WishlistPage> {
 
     return Scaffold(
       bottomNavigationBar: const NavBar(),
-      appBar: AppBar(
-        title: const Text('Wishlist'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.note_add),
-            onPressed: _addNotes,
-            tooltip: 'Add Notes',
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotesFormPage(),
+                ),
+              );
+            },
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            child: Icon(Icons.note_add),
+            heroTag: null,
           ),
-          IconButton(
-            icon: const Icon(Icons.notes),
-            onPressed: _viewNotes,
-            tooltip: 'View Notes',
+          SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotesPage(),
+                ),
+              );
+            },
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            child: Icon(Icons.view_list),
+            heroTag: null,
           ),
         ],
       ),
+
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: FutureBuilder<List<Wishlist>>(
-            future: fetchProduct(request),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Text('No books in wishlist');
-              } else {
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1 / 2,
+        child: Column(
+          children: [
+            Stack(
+               alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/shopping_cart_bg.webp',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 200, // Adjust the height as needed
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 200, // Ensure this matches the image's height
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(0, 0, 0, 0.65),
+                        Color.fromRGBO(0, 0, 0, 0.85),
+                      ],
+                    ),
                   ),
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return WishlistCard(snapshot.data![index]);
-                  },
-                );
-              }
-            },
-          ),
-        ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Wishlist',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                )
+              ],
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FutureBuilder<List<Wishlist>>(
+                future: fetchProduct(request),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No books in wishlist');
+                  } else {
+                    return GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 1 / 2,
+                      ),
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return WishlistCard(snapshot.data![index]);
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        )
+        
+        
       ),
     );
   }

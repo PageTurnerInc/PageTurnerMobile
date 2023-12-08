@@ -6,6 +6,7 @@ import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
+import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -47,10 +48,10 @@ class _NavBarState extends State<NavBar> {
         break;
       case 4:
         // Move to wishlist
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const OwnedBooksPage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const WishlistPage()),
+        );
         break;
     }
   }
@@ -92,7 +93,7 @@ class _NavBarState extends State<NavBar> {
           IconButton(
             icon: const Icon(Icons.list),
             onPressed: () => _onItemTapped(context, 4),
-            // color: currentPage == 4 ? const Color.fromARGB(255, 33, 44, 243) : null,
+            color: currentPage == 4 ? const Color.fromARGB(255, 33, 44, 243) : null,
           ),
         ],
       ),

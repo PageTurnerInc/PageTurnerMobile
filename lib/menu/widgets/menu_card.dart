@@ -50,6 +50,7 @@ class MenuCard extends StatelessWidget {
           } else if (item.name == "Library") {
           } else if (item.name == "Wishlist") {
             if (currentUser.isPremium == "Y") {
+              currentPage = 4;
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -76,7 +77,6 @@ class MenuCard extends StatelessWidget {
                 },
               );
             }
-
           } else if (item.name == "Logout") {
             final response = await request.logout(
                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
