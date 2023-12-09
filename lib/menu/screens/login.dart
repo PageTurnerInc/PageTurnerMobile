@@ -126,14 +126,12 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
-
                         final response = await request.login(
                             "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/login/",
                             {
                               'username': username,
                               'password': password,
                             });
-
                         if (request.loggedIn) {
                           String message = response['message'];
                           String uname = response['username'];
