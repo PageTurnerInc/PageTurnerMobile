@@ -21,14 +21,13 @@ class MenuItem {
 class MenuCard extends StatelessWidget {
   final MenuItem item;
 
-  const MenuCard(this.item, {super.key}); // Constructor
+  const MenuCard(this.item, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Material(
       child: InkWell(
-        // Area responsive terhadap sentuhan
         onTap: () async {
           if (item.name == "Catalogue") {
             currentPage = 1;
@@ -88,6 +87,13 @@ class MenuCard extends StatelessWidget {
               ),
             );
           } else if (item.name == "Library") {
+            currentPage = 4;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const RakPage(),
+              ),
+            );
           } else if (item.name == "Wishlist") {
           } else if (item.name == "Review Placeholder") {
           } else if (item.name == "Logout") {
