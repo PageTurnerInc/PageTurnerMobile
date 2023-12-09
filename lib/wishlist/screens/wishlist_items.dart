@@ -32,7 +32,6 @@ class _WishlistPageState extends State<WishlistPage> {
     return wishlistItems;
   }
 
-
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -73,87 +72,84 @@ class _WishlistPageState extends State<WishlistPage> {
           ),
         ],
       ),
-
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-               alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/shopping_cart_bg.webp',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 200, // Adjust the height as needed
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 200, // Ensure this matches the image's height
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromRGBO(0, 0, 0, 0.65),
-                        Color.fromRGBO(0, 0, 0, 0.85),
-                      ],
-                    ),
+          child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(
+                'assets/images/shopping_cart_bg.webp',
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 200, // Adjust the height as needed
+              ),
+              Container(
+                width: double.infinity,
+                height: 200, // Ensure this matches the image's height
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromRGBO(0, 0, 0, 0.65),
+                      Color.fromRGBO(0, 0, 0, 0.85),
+                    ],
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Wishlist',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                )
-              ],
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: FutureBuilder<List<Wishlist>>(
-                future: fetchProduct(request),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No books in wishlist');
-                  } else {
-                    return GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 1 / 2,
-                      ),
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return WishlistCard(snapshot.data![index]);
-                      },
-                    );
-                  }
-                },
               ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Wishlist',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              )
+            ],
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: FutureBuilder<List<Wishlist>>(
+              future: fetchProduct(request),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Text('No books in wishlist');
+                } else {
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1 / 2,
+                    ),
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return WishlistCard(snapshot.data![index]);
+                    },
+                  );
+                }
+              },
             ),
-          ],
-        )
-        
-        
-      ),
+          ),
+        ],
+      )),
     );
   }
 }

@@ -1,8 +1,9 @@
-import 'dart:convert';
 import "package:flutter/material.dart";
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/review/widgets/review_bar.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class BookPage extends StatelessWidget {
   final Book book;
@@ -15,10 +16,7 @@ class BookPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             leading: BackButton(
-              onPressed: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const BookCataloguePage())),
+              onPressed: () => Navigator.pop(context),
             ),
             title: const Text("Detail Buku")),
         body: SingleChildScrollView(

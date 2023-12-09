@@ -57,7 +57,7 @@ class BookCard extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   actions: [
@@ -154,9 +154,9 @@ class BookCard extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => BookPage(book))
-                                );
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BookPage(book)));
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,

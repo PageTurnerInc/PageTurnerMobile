@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
+import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
@@ -45,7 +46,22 @@ class MenuCard extends StatelessWidget {
                 builder: (context) => const ShoppingCartPage(),
               ),
             );
+          } else if (item.name == "My Books") {
+            currentPage = 3;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OwnedBooksPage(),
+              ),
+            );
           } else if (item.name == "Library") {
+            currentPage = 4;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const RakPage(),
+              ),
+            );
           } else if (item.name == "Wishlist") {
             if (currentUser.isPremium == "Y") {
               currentPage = 4;
@@ -75,27 +91,6 @@ class MenuCard extends StatelessWidget {
                 },
               );
             }
-          } else if (item.name == "Logout") {
-            final response = await request.logout(
-                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
-          } else if (item.name == "My Books") {
-            currentPage = 3;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const OwnedBooksPage(),
-              ),
-            );
-          } else if (item.name == "Library") {
-            currentPage = 4;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const RakPage(),
-              ),
-            );
-          } else if (item.name == "Wishlist") {
-          } else if (item.name == "Review Placeholder") {
           } else if (item.name == "Logout") {
             final response = await request.logout(
                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");

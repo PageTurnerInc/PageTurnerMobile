@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:page_turner_mobile/menu/models/account.dart';
 
-
-
 class AddLibrary extends StatefulWidget {
   const AddLibrary({super.key});
 
@@ -92,33 +90,32 @@ class _AddLibraryState extends State<AddLibrary> {
                       backgroundColor: MaterialStateProperty.all(Colors.indigo),
                     ),
                     onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                            // Kirim ke Django dan tunggu respons
-                            // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                            final response = await request.postJson(
+                      if (_formKey.currentState!.validate()) {
+                        // Kirim ke Django dan tunggu respons
+                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                        final response = await request.postJson(
                             "https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/create-rak-flutter/",
                             jsonEncode(<String, String>{
-                                'name': _name,
-                                'description': _description,
-                                // TODO: Sesuaikan field data sesuai dengan aplikasimu
+                              'name': _name,
+                              'description': _description,
+                              // TODO: Sesuaikan field data sesuai dengan aplikasimu
                             }));
-                            if (response['status'] == 'success') {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                content: Text("New library has been saved!"),
-                                ));
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => RakPage()),
-                                );
-                            } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                    content:
-                                        Text("Error"),
-                                ));
-                            }
+                        if (response['status'] == 'success') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("New library has been saved!"),
+                          ));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => RakPage()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Error"),
+                          ));
                         }
+                      }
                     },
                     child: const Text(
                       "Save",

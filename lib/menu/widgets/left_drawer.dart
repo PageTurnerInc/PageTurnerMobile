@@ -56,16 +56,14 @@ class LeftDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyHomePage(),
-              ));
+                  ));
             },
           ),
           ListTile(
             leading: const Icon(Icons.checklist),
             title: const Text('Catalogue'),
             // Bagian redirection ke ShopFormPage
-            onTap: () async {
-              
-            },
+            onTap: () async {},
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
@@ -97,9 +95,7 @@ class LeftDrawer extends StatelessWidget {
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Library'),
             // Bagian redirection ke ShopFormPage
-            onTap: () async {
-              
-            },
+            onTap: () async {},
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
@@ -141,8 +137,7 @@ class LeftDrawer extends StatelessWidget {
             // Bagian redirection ke ShopFormPage
             onTap: () async {
               final response = await request.logout(
-                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/"
-              );
+                  "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
               String message = response["message"];
               if (response['status']) {
                 String uname = response["username"];
