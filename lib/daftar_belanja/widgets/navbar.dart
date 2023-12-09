@@ -48,10 +48,31 @@ class _NavBarState extends State<NavBar> {
         break;
       case 4:
         // Move to wishlist
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const WishlistPage()),
-        );
+        if (currentUser.isPremium == "Y"){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const WishlistPage()),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Akses Terbatas"),
+                content: const Text(
+                    "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
         break;
     }
   }

@@ -32,11 +32,11 @@ class _NotesFormPageState extends State<NotesFormPage> {
                 'assets/images/owned_book_bg.jpg',
                 fit: BoxFit.cover,
                 width: double.infinity,
-                height: 200, // Adjust the height as needed
+                height: 200, 
               ),
               Container(
                 width: double.infinity,
-                height: 200, // Ensure this matches the image's height
+                height: 200, 
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
