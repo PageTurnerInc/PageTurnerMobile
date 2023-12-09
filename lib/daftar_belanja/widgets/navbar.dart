@@ -67,7 +67,7 @@ class _NavBarState extends State<NavBar> {
         children: <Widget>[
           // Home
           IconButton(
-            icon: const Icon(Icons.home_outlined),
+            icon: const Icon(Icons.home),
             onPressed: () => _onItemTapped(context, 0),
             color: currentPage == 0 ? const Color.fromARGB(255, 33, 44, 243) : null,
           ),

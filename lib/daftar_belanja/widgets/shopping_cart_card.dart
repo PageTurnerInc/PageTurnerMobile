@@ -33,6 +33,9 @@ class BookCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        double screenWidth = MediaQuery.of(context).size.width;
+        double buttonWidth = screenWidth * 0.3;
+
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -81,7 +84,7 @@ class BookCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            width: 150,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 // Handle Book Details
@@ -107,7 +110,7 @@ class BookCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 150,
+                            width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
                                 _removeFromCart(context, request);
