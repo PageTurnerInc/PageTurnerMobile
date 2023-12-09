@@ -28,14 +28,12 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    double screenHeight = MediaQuery.of(context).size.height;
     _isPremium = accountType.first;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text(
             'Sign Up',
-            textAlign: TextAlign.right,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),

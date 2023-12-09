@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
@@ -16,8 +17,7 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Future<List<Book>> fetchProduct(request) async {
     var response = await request.get(
-      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/"
-    );
+        "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/");
 
     List<Book> listShoppingCart = [];
     for (var d in response) {
@@ -45,14 +45,11 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
-              } 
-              else if (snapshot.hasError) {
+              } else if (snapshot.hasError) {
                 return const Text('Error fetching data');
-              } 
-              else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Text('No books in cart');
-              } 
-              else {
+              } else {
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

@@ -27,7 +27,8 @@ class RakPage extends StatefulWidget {
 
 class _RakPageState extends State<RakPage> {
   Future<List<Rak>> fetchRak(request) async {
-    var response = await request.get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak/");
+    var response = await request
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak/");
 
     List<Rak> list_rak = [];
     for (var d in response) {
@@ -38,7 +39,7 @@ class _RakPageState extends State<RakPage> {
     return list_rak;
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
@@ -146,14 +147,21 @@ class _RakPageState extends State<RakPage> {
                     SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddLibrary()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AddLibrary()));
                       },
                       child: const Text('Add New Library'),
                     ),
                     SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RakRecommendPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RakRecommendPage()));
                       },
                       child: const Text('Recommendation'),
                     ),
@@ -167,7 +175,8 @@ class _RakPageState extends State<RakPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailRakPage(snapshot.data![index]),
+                            builder: (context) =>
+                                DetailRakPage(snapshot.data![index]),
                           ),
                         );
                       },

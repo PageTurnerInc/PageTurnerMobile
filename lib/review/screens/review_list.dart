@@ -57,33 +57,29 @@ class _ReviewsPageState extends State<ReviewsPage> {
     int maxCharacters = 19;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Reviews & Ratings',
-          style: TextStyle(color: Colors.black),
+        appBar: AppBar(
+          title: const Text(
+            'Reviews & Ratings',
+            style: TextStyle(color: Colors.black),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BookPage(widget.book),
+                ),
+              );
+            },
+            color: Colors.black,
+          ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BookPage(widget.book),
-              ),
-            );
-          },
-          color: Colors.black,
-        ),
-      ),
-
-      bottomNavigationBar: NavBar(),
-
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
+        bottomNavigationBar: NavBar(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(alignment: Alignment.center, children: [
                 Image.network(
                   widget.book.fields.imageUrlL,
                   fit: BoxFit.cover,
@@ -110,9 +106,11 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   children: [
                     Text(
                       widget.book.fields.bookTitle.length > maxCharacters
-                              // ignore: prefer_interpolation_to_compose_strings
-                              ? widget.book.fields.bookTitle.substring(0, maxCharacters) + '...'
-                              : widget.book.fields.bookTitle,
+                          // ignore: prefer_interpolation_to_compose_strings
+                          ? widget.book.fields.bookTitle
+                                  .substring(0, maxCharacters) +
+                              '...'
+                          : widget.book.fields.bookTitle,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 40,
@@ -121,9 +119,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
                       ),
                     ),
                     Text(
-                      "by ${widget.book.fields.bookAuthor.length <= 16 ? 
-                        // ignore: prefer_interpolation_to_compose_strings
-                        widget.book.fields.bookAuthor : widget.book.fields.bookAuthor.substring(0, 16) + '...'}",
+                      "by ${widget.book.fields.bookAuthor.length <= 16 ?
+                          // ignore: prefer_interpolation_to_compose_strings
+                          widget.book.fields.bookAuthor : widget.book.fields.bookAuthor.substring(0, 16) + '...'}",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 32,
@@ -131,197 +129,201 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 6,),
+                    const SizedBox(
+                      height: 6,
+                    ),
                     BookRate(book: widget.book, isReviewList: true)
                   ],
                 )
-              ]
-            ),
-            const SizedBox(height: 10,),
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(width: 6,),
-                        Text(
-                          "Your Rating & Review",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                    )
-                  ]
-                )
+              ]),
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            // MyReviewCard(book: widget.book),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: FutureBuilder(
-                future: fetchMyReview(request),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return SizedBox(
-                      width: 320,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ReviewFormPage(book: widget.book,),
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: Colors.blue,
+                              ),
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                "Your Rating & Review",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        ])),
+              ),
+              // MyReviewCard(book: widget.book),
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: FutureBuilder(
+                  future: fetchMyReview(request),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return SizedBox(
+                        width: 320,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReviewFormPage(
+                                  book: widget.book,
+                                ),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                const Color.fromARGB(255, 31, 156, 35),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(5), // Rounded edges
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: const Color.fromARGB(255, 31, 156, 35),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(5), // Rounded edges
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12), // Vertical padding
                           ),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12), // Vertical padding
-                        ),
-                        child: const Text(
-                          'Add Your Review',
-                          style: TextStyle(
-                            fontSize: 18, // Font size
-                            fontWeight: FontWeight.bold, // Font weight
+                          child: const Text(
+                            'Add Your Review',
+                            style: TextStyle(
+                              fontSize: 18, // Font size
+                              fontWeight: FontWeight.bold, // Font weight
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) {
-                        return ReviewCard(book: widget.book, 
-                          review: snapshot.data![index], 
-                          isMyReview: true
-                        );
-                      }
-                    );
-                  }
-                },
-              ),
-            ),
-            const SizedBox(height: 10,),
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(width: 6,),
-                        Text(
-                          "Others' Ratings & Reviews",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                    )
-                  ]
-                )
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: DropdownMenu<String>(
-                        initialSelection: ratings.first,
-                        onSelected: (String? value) {
-                          setState(() {
-                            currentRating = value!;
-                            selectedRating = currentRating;
-                            print(selectedRating);
+                      );
+                    } else {
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (_, index) {
+                            return ReviewCard(
+                                book: widget.book,
+                                review: snapshot.data![index],
+                                isMyReview: true);
                           });
-                        },
-                        dropdownMenuEntries: ratings.map<DropdownMenuEntry<String>>((String value) {
-                          return DropdownMenuEntry<String>(value: value, label: value);
-                        }).toList(),
-                      )
-                    )
-                  ],
-                )
-              )
-            ),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: FutureBuilder(
-                future: fetchReviews(request),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Column(
-                      children: [
-                        Icon(
-                          Icons.comments_disabled,
-                        ),
-                        Text(
-                          "No ratings & reviews from other users yet"
-                        )
-                      ],
-                    );
-                  } else {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) {
-                        if (selectedRating == '' || selectedRating == 'All Ratings' || snapshot.data![index].fields.rating == int.parse(selectedRating)) {
-                          return ReviewCard(book: widget.book, 
-                            review: snapshot.data![index], 
-                            isMyReview: false
-                          );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      }
-                    );
-                  }
-                },
+                    }
+                  },
+                ),
               ),
-            )
-          ],
-        ),
-      )
-    );
+              const SizedBox(
+                height: 10,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: Colors.blue,
+                              ),
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                "Others' Ratings & Reviews",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        ])),
+              ),
+              Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: DropdownMenu<String>(
+                                initialSelection: ratings.first,
+                                onSelected: (String? value) {
+                                  setState(() {
+                                    currentRating = value!;
+                                    selectedRating = currentRating;
+                                    print(selectedRating);
+                                  });
+                                },
+                                dropdownMenuEntries: ratings
+                                    .map<DropdownMenuEntry<String>>(
+                                        (String value) {
+                                  return DropdownMenuEntry<String>(
+                                      value: value, label: value);
+                                }).toList(),
+                              ))
+                        ],
+                      ))),
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: FutureBuilder(
+                  future: fetchReviews(request),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Column(
+                        children: [
+                          Icon(
+                            Icons.comments_disabled,
+                          ),
+                          Text("No ratings & reviews from other users yet")
+                        ],
+                      );
+                    } else {
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (_, index) {
+                            if (selectedRating == '' ||
+                                selectedRating == 'All Ratings' ||
+                                snapshot.data![index].fields.rating ==
+                                    int.parse(selectedRating)) {
+                              return ReviewCard(
+                                  book: widget.book,
+                                  review: snapshot.data![index],
+                                  isMyReview: false);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          });
+                    }
+                  },
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

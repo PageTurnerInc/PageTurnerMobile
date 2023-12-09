@@ -138,7 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                           String uname = response['username'];
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
@@ -174,7 +175,8 @@ class _LoginPageState extends State<LoginPage> {
                         foregroundColor: Colors.white,
                         backgroundColor: const Color.fromARGB(255, 31, 156, 35),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5), // Rounded edges
+                          borderRadius:
+                              BorderRadius.circular(5), // Rounded edges
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
@@ -202,7 +204,8 @@ class _LoginPageState extends State<LoginPage> {
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.indigo,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5), // Rounded edges
+                          borderRadius:
+                              BorderRadius.circular(5), // Rounded edges
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),

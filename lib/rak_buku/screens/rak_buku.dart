@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 
-
 class DetailRakPage extends StatelessWidget {
   final Rak rak;
 
@@ -39,8 +38,7 @@ class DetailRakPage extends StatelessWidget {
     );
   }
 
-  Future<void> _removeRak(
-      BuildContext context, CookieRequest request) async {
+  Future<void> _removeRak(BuildContext context, CookieRequest request) async {
     await request.postJson(
       'https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/remove_rak_flutter/',
       jsonEncode({
@@ -157,7 +155,8 @@ class DetailRakPage extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: const Color.fromARGB(255, 205, 28, 28),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 205, 28, 28),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -211,7 +210,8 @@ class DetailRakPage extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                backgroundColor: const Color.fromARGB(255, 31, 156, 35),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 31, 156, 35),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
@@ -252,7 +252,8 @@ class DetailRakPage extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: const Color.fromARGB(255, 205, 28, 28),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 205, 28, 28),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -297,8 +298,7 @@ class DetailRakPage extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                     ListView.builder(
+                      ListView.builder(
                         shrinkWrap: true,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (_, index) => Card(
@@ -320,46 +320,48 @@ class DetailRakPage extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                  Text("${snapshot.data![index].fields.bookAuthor}"),
-                                  const SizedBox(height: 10),
-                                  Text("${snapshot.data![index].fields.yearOfPublication}"),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Book book = snapshot.data![index];
-                                      _removeBuku(context, request, book);
+                                Text(
+                                    "${snapshot.data![index].fields.bookAuthor}"),
+                                const SizedBox(height: 10),
+                                Text(
+                                    "${snapshot.data![index].fields.yearOfPublication}"),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Book book = snapshot.data![index];
+                                    _removeBuku(context, request, book);
 
-                                      Navigator.pop(context);
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => DetailRakPage(rak),
-                                        ),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: const Color.fromARGB(255, 205, 28, 28),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailRakPage(rak),
                                       ),
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 205, 28, 28),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
-                                    child: const Text(
-                                      'Delete',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                  ),
+                                  child: const Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                ),
                               ],
                             ),
                           ),
                         ),
                       ),
-
-
-
                     ],
                   );
                 }

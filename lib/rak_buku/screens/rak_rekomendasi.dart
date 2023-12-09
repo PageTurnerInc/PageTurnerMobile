@@ -28,9 +28,8 @@ class RakRecommendPage extends StatefulWidget {
 
 class _RakRecommendPageState extends State<RakRecommendPage> {
   Future<List<Rak>> fetchRak(request) async {
-    var response = await request.get(
-        "https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak-all/"
-    );
+    var response = await request
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak-all/");
 
     // melakukan konversi data json menjadi object Product
     List<Rak> list_rak = [];
@@ -56,11 +55,9 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } 
-          else if (snapshot.hasError) {
+          } else if (snapshot.hasError) {
             return const Center(child: Text('Error loading data'));
-          } 
-          else if (!snapshot.hasData || snapshot.data.isEmpty) {
+          } else if (!snapshot.hasData || snapshot.data.isEmpty) {
             return const Column(
               children: [
                 Text(
@@ -70,8 +67,7 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                 SizedBox(height: 8),
               ],
             );
-          } 
-          else if (isPremium == "Regular Account") {
+          } else if (isPremium == "Regular Account") {
             return Column(
               children: [
                 Stack(
@@ -121,7 +117,8 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text("Upgrade your account to premium to see other users' libraries",
+                        Text(
+                          "Upgrade your account to premium to see other users' libraries",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -135,8 +132,7 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                 ),
               ],
             );
-          }
-          else {
+          } else {
             return Column(
               children: [
                 Stack(
@@ -213,10 +209,12 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                       ),
                     ),
                     SizedBox(width: 16.0),
-                
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RakPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RakPage()));
                       },
                       child: const Text('Your Library'),
                     ),
@@ -230,7 +228,8 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailRakPage(snapshot.data![index]),
+                            builder: (context) =>
+                                DetailRakPage(snapshot.data![index]),
                           ),
                         );
                       },
