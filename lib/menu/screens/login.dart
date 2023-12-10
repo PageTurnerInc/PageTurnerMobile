@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                             ..hideCurrentSnackBar()
                             ..showSnackBar(SnackBar(
                                 content:
-                                    Text("$message Selamat datang, $uname.")));
+                                    Text("$message Welcome, $uname.")));
 
                           currentUser = Account(
                             user: response["user"],

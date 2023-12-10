@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import 'package:page_turner_mobile/menu/models/book.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/review/widgets/review_bar.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';

@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
-import 'package:page_turner_mobile/menu/screens/menu.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -18,6 +18,7 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _username = "";
   List<String> paymentMethod = [
+    "--",
     "Debit Card",
     "Credit Card",
     "GoPay",
@@ -42,6 +43,7 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     _payment = paymentMethod.first;
     return Scaffold(
       appBar: AppBar(
@@ -108,7 +110,9 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
                             });
                           },
                           validator: (String? value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value == "--") {
                               return "Choose your payment method!";
                             }
                             return null;
@@ -139,6 +143,7 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
 
                               return Container(
                                 height: screenHeight * 0.45,
+                                width: screenWidth * 0.98,
                                 child: SingleChildScrollView(
                                   child: DataTable(
                                     columns: const [
@@ -149,8 +154,11 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
                                         .map(
                                           (book) => DataRow(
                                             cells: [
-                                              DataCell(
-                                                  Text(book.fields.bookTitle)),
+                                              DataCell(Text(book.fields
+                                                          .bookTitle.length >
+                                                      30
+                                                  ? '${book.fields.bookTitle.substring(0, 30)}...'
+                                                  : book.fields.bookTitle)),
                                               DataCell(Text(book.fields.isbn)),
                                             ],
                                           ),
@@ -196,16 +204,17 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
                                         'username': _username.toString(),
                                         'payment': _payment.toString(),
                                       }));
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content:
-                                        Text(response["message"].toString()),
-                                  ));
                                   if (response['status'] == true) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(
+                                          "Payment with $_payment is successful"),
+                                    ));
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MyHomePage()),
+                                          builder: (context) =>
+                                              const BookCataloguePage()),
                                     );
                                   }
                                 }
