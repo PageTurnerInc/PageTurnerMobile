@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/book_detail.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -56,7 +57,7 @@ class BookCard extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   actions: [
@@ -86,7 +87,10 @@ class BookCard extends StatelessWidget {
                             width: buttonWidth,
                             child: ElevatedButton(
                               onPressed: () {
-                                // Handle Book Details
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BookPage(book)));
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
@@ -124,7 +128,8 @@ class BookCard extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                backgroundColor: const Color.fromARGB(255, 205, 28, 28),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 205, 28, 28),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(5), // Rounded edges

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
+import 'package:page_turner_mobile/menu/screens/register_form.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
@@ -119,33 +120,32 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     obscureText: true,
                   ),
-                  const SizedBox(height: 24.0),
+                  SizedBox(height: screenHeight * 0.05),
                   SizedBox(
                     width: buttonWidth,
                     child: ElevatedButton(
                       onPressed: () async {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
-
                         final response = await request.login(
                             "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/login/",
                             {
                               'username': username,
                               'password': password,
                             });
-
                         if (request.loggedIn) {
                           String message = response['message'];
                           String uname = response['username'];
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(SnackBar(
                                 content:
-                                    Text("$message Selamat datang, $uname.")));
+                                    Text("$message Welcome, $uname.")));
 
                           currentUser = Account(
                             user: response["user"],
@@ -175,12 +175,42 @@ class _LoginPageState extends State<LoginPage> {
                         foregroundColor: Colors.white,
                         backgroundColor: const Color.fromARGB(255, 31, 156, 35),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5), // Rounded edges
+                          borderRadius:
+                              BorderRadius.circular(5), // Rounded edges
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: const Text(
                         'Login',
+                        style: TextStyle(
+                          fontSize: 18, // Font size
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.05),
+                  SizedBox(
+                    width: buttonWidth,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpFormPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.indigo,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(5), // Rounded edges
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: const Text(
+                        'Sign Up',
                         style: TextStyle(
                           fontSize: 18, // Font size
                           fontWeight: FontWeight.bold,
