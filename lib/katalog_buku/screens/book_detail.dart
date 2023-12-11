@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'package:page_turner_mobile/review/widgets/review_bar.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -13,6 +14,7 @@ class BookPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
+        bottomNavigationBar: const NavBar(),
         appBar: AppBar(
             leading: BackButton(
               onPressed: () => Navigator.pop(context),
