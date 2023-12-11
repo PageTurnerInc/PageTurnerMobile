@@ -49,9 +49,6 @@ class _BookCataloguePageState extends State<BookCataloguePage> {
               else if (snapshot.hasError) {
                 return const Text('Error fetching data');
               } 
-              else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Text('No books in cart');
-              } 
               else {
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
