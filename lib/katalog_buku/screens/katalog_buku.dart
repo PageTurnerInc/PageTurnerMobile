@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
+import 'package:page_turner_mobile/katalog_buku/screens/book_form.dart';
 import 'package:page_turner_mobile/katalog_buku/widgets/book_card.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
@@ -39,6 +40,25 @@ class _BookCataloguePageState extends State<BookCataloguePage> {
 
     return Scaffold(
       bottomNavigationBar: NavBar(),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BookFormPage(),
+                ),
+              );
+            },
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            heroTag: null,
+            child: const Icon(Icons.note_add),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
