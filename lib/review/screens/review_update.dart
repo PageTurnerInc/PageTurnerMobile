@@ -3,20 +3,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
+import 'package:page_turner_mobile/review/models/review.dart';
 import 'package:page_turner_mobile/review/screens/review_list.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-class ReviewFormPage extends StatefulWidget {
+class ReviewUpdatePage extends StatefulWidget {
   final Book book;
+  final Review review;
 
-  const ReviewFormPage({required this.book, Key? key}) : super(key: key);
+  const ReviewUpdatePage({required this.book, required this.review, Key? key})
+      : super(key: key);
 
   @override
-  State<ReviewFormPage> createState() => _ReviewFormPageState();
+  State<ReviewUpdatePage> createState() => _ReviewUpdatePageState();
 }
 
-class _ReviewFormPageState extends State<ReviewFormPage> {
+class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
   final _formKey = GlobalKey<FormState>();
 
   int _rating = 0;
@@ -86,7 +89,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         onChanged: (String? value) {
                           setState(() {
                             if (value == null || value.isEmpty) {
-                              _comment = "";
+                              _comment = widget.review.fields.comment;
                             } else {
                               _comment = value;
                             }
@@ -103,17 +106,15 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                               MaterialStateProperty.all(Colors.green),
                         ),
                         onPressed: () async {
-                          if (_rating == 0) {
-                            // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Rating cannot be 0"),
-                            ));
-                          } else if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             // Kirim ke Django dan tunggu respons
                             // DONE: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                            if (_rating == 0) {
+                              _rating = widget.review.fields.rating;
+                            }
+
                             final response = await request.postJson(
-                                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/create-review-flutter/${widget.book.pk}/",
+                                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/update-review-flutter/${widget.review.pk}/",
                                 jsonEncode(<String, String>{
                                   'rating': _rating.toString(),
                                   'comment': _comment,
@@ -122,7 +123,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content: Text("Review has been created!"),
+                                content: Text("Review has been updated!"),
                               ));
                               // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
@@ -142,7 +143,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                           }
                         },
                         child: const Text(
-                          "Save",
+                          "Update",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

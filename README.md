@@ -64,4 +64,4 @@ Pengguna dapat menambahkan buku ke keranjang belanja mereka. Mereka dapat meliha
 8. Implementasi Fitur Logout 
 
 ## Berita Acara
-https://1drv.ms/x/c/fc7e6237f959c6ad/EermKftZwGJKl6t6bYl4oIEB9sPT07an4yM_LSxUvTeQqA?e=WpkeEe
+https://docs.google.com/spreadsheets/d/1DSXN4qKef2zWQp2MBhTPECHIivAopsNBcR8DGBIKT8A/edit?usp=sharing
