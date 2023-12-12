@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
+import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/shopping_cart.dart';
 import 'package:page_turner_mobile/daftar_belanja/screens/owned_books.dart';
+import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 
 class MenuItem {
   final String name;
@@ -20,14 +22,13 @@ class MenuItem {
 class MenuCard extends StatelessWidget {
   final MenuItem item;
 
-  const MenuCard(this.item, {super.key}); // Constructor
+  const MenuCard(this.item, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Material(
       child: InkWell(
-        // Area responsive terhadap sentuhan
         onTap: () async {
           if (item.name == "Catalogue") {
             currentPage = 1;
@@ -54,8 +55,42 @@ class MenuCard extends StatelessWidget {
               ),
             );
           } else if (item.name == "Library") {
+            currentPage = 4;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const RakPage(),
+              ),
+            );
           } else if (item.name == "Wishlist") {
-          } else if (item.name == "Review Placeholder") {
+            if (currentUser.isPremium == "Y") {
+              currentPage = 4;
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WishlistPage(),
+                ),
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Akses Terbatas"),
+                    content: const Text(
+                        "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           } else if (item.name == "Logout") {
             final response = await request.logout(
                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/logout/");
