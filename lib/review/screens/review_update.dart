@@ -37,7 +37,7 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: const NavBar(),
       body: Container(
         alignment: Alignment.center,
         child: Center(
@@ -60,7 +60,7 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                           setState(() {
                             _currentRating = index + 1;
                             _rating = _currentRating;
-                            print(_rating);
+                            // print(_rating);
                           });
                         },
                         child: Icon(
