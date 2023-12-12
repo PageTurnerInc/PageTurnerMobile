@@ -54,6 +54,7 @@ class ReviewCard extends StatelessWidget {
                       ),
                       Text(
                         review.fields.reviewer.length > 10
+                          // ignore: prefer_interpolation_to_compose_strings
                           ? review.fields.reviewer.substring(0, 10) + "..."
                           : review.fields.reviewer,
                         style: const TextStyle(

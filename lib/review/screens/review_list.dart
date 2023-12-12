@@ -76,7 +76,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
         ),
       ),
 
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: const NavBar(),
 
       body: SingleChildScrollView(
         child: Column(
@@ -253,7 +253,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Column(
@@ -267,7 +267,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                           setState(() {
                             currentRating = value!;
                             selectedRating = currentRating;
-                            print(selectedRating);
+                            // print(selectedRating);
                           });
                         },
                         dropdownMenuEntries: ratings.map<DropdownMenuEntry<String>>((String value) {
