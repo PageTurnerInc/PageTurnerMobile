@@ -1,5 +1,5 @@
 # PageTurner-Mobile
-[![Build status](https://build.appcenter.ms/v0.1/apps/1c1054fe-3ac9-420e-ad00-ec118de7431c/branches/main/badge)](https://appcenter.ms)
+[![Build status](https://build.appcenter.ms/v0.1/apps/1c1054fe-3ac9-420e-ad00-ec118de7431c/branches/main/badge)](https://appcenter.ms) <br>
 https://install.appcenter.ms/orgs/PageTurner/apps/PageTurner/releases/1
 
 ## Anggota Kelompok:
