@@ -7,6 +7,7 @@ import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/screens/menu.dart';
 import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
+import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -48,9 +49,36 @@ class _NavBarState extends State<NavBar> {
         break;
       case 4:
         // Move to wishlist
+        if (currentUser.isPremium == "Y"){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const WishlistPage()),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Akses Terbatas"),
+                content: const Text(
+                    "Anda harus menjadi user premium untuk mengakses fitur wishlist!"),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+        break;
+      case 5:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const WishlistPage()),
+          MaterialPageRoute(builder: (context) => const RakPage(),),
         );
         break;
     }
@@ -94,6 +122,12 @@ class _NavBarState extends State<NavBar> {
             icon: const Icon(Icons.list),
             onPressed: () => _onItemTapped(context, 4),
             color: currentPage == 4 ? const Color.fromARGB(255, 33, 44, 243) : null,
+          ),
+          // Library
+          IconButton(
+            icon: const Icon(Icons.play_arrow_rounded),
+            onPressed: () => _onItemTapped(context, 5),
+            color: currentPage == 5 ? const Color.fromARGB(255, 33, 44, 243) : null,
           ),
         ],
       ),

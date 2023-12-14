@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -16,12 +16,25 @@ class BookCard extends StatelessWidget {
   const BookCard(this.book, {super.key});
 
   Future<void> _addToCart(BuildContext context, CookieRequest request) async {
-    await request.postJson(
+    var response = await request.postJson(
         'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/add_to_cart_flutter/',
         jsonEncode({
           "user": currentUser.user,
           "bookID": book.pk,
         }));
+    if (response["status"] == true) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(const SnackBar(
+            content:
+                Text("Book has been successfully added to Shopping Cart")));
+    } else {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(const SnackBar(
+            content:
+                Text("You already own this book!")));
+    }
   }
 
   void _showModal(BuildContext context, request) {
@@ -57,7 +70,7 @@ class BookCard extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   actions: [
@@ -89,7 +102,6 @@ class BookCard extends StatelessWidget {
                               onPressed: () async {
                                 if (currentUser.isPremium == "Y") {
                                   currentPage = 4;
-                                  print("masuk");
                                   final response = await request.postJson(
                                       "https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/add_to_wishlist_flutter/",
                                       jsonEncode(<String, String>{
@@ -104,11 +116,11 @@ class BookCard extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => WishlistPage()),
+                                          builder: (context) =>
+                                              const WishlistPage()),
                                     );
                                   }
                                 } else {
-                                  print("masuk");
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -154,9 +166,9 @@ class BookCard extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => BookPage(book))
-                                );
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BookPage(book)));
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
@@ -181,8 +193,26 @@ class BookCard extends StatelessWidget {
                           SizedBox(
                             width: buttonWidth,
                             child: ElevatedButton(
-                              onPressed: () {
-                                _addToCart(context, request);
+                              onPressed: () async {
+                                var response = await request.postJson(
+                                    'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/add_to_cart_flutter/',
+                                    jsonEncode({
+                                      "user": currentUser.user,
+                                      "bookID": book.pk,
+                                    }));
+                                if (response["status"] == true) {
+                                  ScaffoldMessenger.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(const SnackBar(
+                                        content:
+                                            Text("Book has been successfully added to Shopping Cart")));
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(const SnackBar(
+                                        content:
+                                            Text("You already own this book!")));
+                                }
                                 Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(

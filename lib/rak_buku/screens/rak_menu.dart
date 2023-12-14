@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/rak_buku/models/rak.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 import 'package:page_turner_mobile/rak_buku/screens/add_library.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_buku.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_rekomendasi.dart';
-import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/daftar_belanja/screens/checkout_form.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
-import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
-import 'package:provider/provider.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:page_turner_mobile/menu/models/book.dart';
 
 class RakPage extends StatefulWidget {
   const RakPage({Key? key}) : super(key: key);
@@ -27,29 +17,24 @@ class RakPage extends StatefulWidget {
 
 class _RakPageState extends State<RakPage> {
   Future<List<Rak>> fetchRak(request) async {
-    var response = await request.get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak/");
+    var response = await request
+        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak/");
 
-    List<Rak> list_rak = [];
+    List<Rak> listRak = [];
     for (var d in response) {
       if (d != null) {
-        list_rak.add(Rak.fromJson(d));
+        listRak.add(Rak.fromJson(d));
       }
     }
-    return list_rak;
+    return listRak;
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
-    double screenWidth = MediaQuery.of(context).size.width;
-    double buttonWidth = screenWidth * 0.92;
-
-    String isPremium = "Regular Account";
-    if (currentUser.isPremium == "Y") isPremium = "Premium Account";
-
     return Scaffold(
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: const NavBar(),
       body: FutureBuilder<List<Rak>>(
         future: fetchRak(request),
         builder: (context, AsyncSnapshot snapshot) {
@@ -97,7 +82,7 @@ class _RakPageState extends State<RakPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Your Library',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -106,59 +91,49 @@ class _RakPageState extends State<RakPage> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Welcome ${currentUser.fullName}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          isPremium,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     )
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
+
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Your Library",
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
+                    const SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddLibrary()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AddLibrary()));
                       },
                       child: const Text('Add New Library'),
                     ),
-                    SizedBox(width: 16.0),
+                    const SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RakRecommendPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RakRecommendPage()));
                       },
                       child: const Text('Recommendation'),
                     ),
                   ],
                 ),
+                
                 Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data!.length,
@@ -167,11 +142,12 @@ class _RakPageState extends State<RakPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailRakPage(snapshot.data![index]),
+                            builder: (context) =>
+                                DetailRakPage(snapshot.data![index]),
                           ),
                         );
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 100, // Set a fixed height for the container
                         child: Card(
                           margin: const EdgeInsets.symmetric(

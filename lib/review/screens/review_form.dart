@@ -45,7 +45,9 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(5, (index) {
@@ -60,13 +62,17 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         },
                         child: Icon(
                           Icons.star,
-                          color: index < _currentRating ? Colors.blue : Colors.grey,
+                          color: index < _currentRating
+                              ? Colors.blue
+                              : Colors.grey,
                           size: 50,
                         ),
                       );
                     }),
                   ),
-                  const SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -85,63 +91,63 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                               _comment = value;
                             }
                           });
-                        }
-                    ),
+                        }),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green),
-                          ),
-                          onPressed: () async {
-                            if (_rating == 0) {
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                        ),
+                        onPressed: () async {
+                          if (_rating == 0) {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Rating cannot be 0"),
+                            ));
+                          } else if (_formKey.currentState!.validate()) {
+                            // Kirim ke Django dan tunggu respons
+                            // DONE: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                            final response = await request.postJson(
+                                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/create-review-flutter/${widget.book.pk}/",
+                                jsonEncode(<String, String>{
+                                  'rating': _rating.toString(),
+                                  'comment': _comment,
+                                }));
+                            if (response['status'] == 'success') {
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                  content:
-                                      Text("Rating cannot be 0"),
+                                content: Text("Review has been created!"),
                               ));
-                            } else if (_formKey.currentState!.validate()) {
-                              // Kirim ke Django dan tunggu respons
-                              // DONE: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                              final response = await request.postJson(
-                                "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/create-review-flutter/${widget.book.pk}/",
-                              jsonEncode(<String, String>{
-                                  'rating': _rating.toString(),
-                                  'comment': _comment,
-                              }));
-                              if (response['status'] == 'success') {
-                                  // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                  content: Text("Review has been created!"),
-                                  ));
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ReviewsPage(book: widget.book,)),
-                                  );
-                              } else {
-                                  // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                      content:
-                                          Text("ERROR, please try again!"),
-                                  ));
-                              }
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ReviewsPage(
+                                          book: widget.book,
+                                        )),
+                              );
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("ERROR, please try again!"),
+                              ));
                             }
-                          },
-                          child: const Text(
-                            "Save",
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          }
+                        },
+                        child: const Text(
+                          "Save",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
             ),

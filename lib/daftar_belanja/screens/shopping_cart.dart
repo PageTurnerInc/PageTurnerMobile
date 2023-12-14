@@ -19,8 +19,8 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Future<List<Book>> fetchProduct(request) async {
-    var response = await request
-        .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/");
+    var response = await request.get(
+        "https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/get_shopping_cart/");
 
     List<Book> listShoppingCart = [];
     for (var d in response) {
@@ -55,20 +55,18 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
           },
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
-          child: Row (
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                "Checkout Cart",
-                style: TextStyle(
-                  fontSize: 18, // Font size
-                  fontWeight: FontWeight.bold,
-                ),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+            Text(
+              "Checkout Cart",
+              style: TextStyle(
+                fontSize: 18, // Font size
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(width: 10),
-              Icon(Icons.add_shopping_cart),
-            ]
-          ),
+            ),
+            SizedBox(width: 10),
+            Icon(Icons.add_shopping_cart),
+          ]),
         ),
       ),
       body: SingleChildScrollView(
@@ -183,7 +181,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: const Color.fromARGB(255, 31, 156, 35),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 31, 156, 35),
                               shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(5), // Rounded edges

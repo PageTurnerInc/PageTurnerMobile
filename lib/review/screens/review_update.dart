@@ -12,7 +12,8 @@ class ReviewUpdatePage extends StatefulWidget {
   final Book book;
   final Review review;
 
-  const ReviewUpdatePage({required this.book, required this.review, Key? key}) : super(key: key);
+  const ReviewUpdatePage({required this.book, required this.review, Key? key})
+      : super(key: key);
 
   @override
   State<ReviewUpdatePage> createState() => _ReviewUpdatePageState();
@@ -47,7 +48,9 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(5, (index) {
@@ -62,13 +65,17 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                         },
                         child: Icon(
                           Icons.star,
-                          color: index < _currentRating ? Colors.blue : Colors.grey,
+                          color: index < _currentRating
+                              ? Colors.blue
+                              : Colors.grey,
                           size: 50,
                         ),
                       );
                     }),
                   ),
-                  const SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
@@ -87,60 +94,61 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                               _comment = value;
                             }
                           });
-                        }
-                    ),
+                        }),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green),
-                          ),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              // Kirim ke Django dan tunggu respons
-                              // DONE: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                              if (_rating == 0) {
-                                _rating = widget.review.fields.rating;
-                              }
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            // Kirim ke Django dan tunggu respons
+                            // DONE: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                            if (_rating == 0) {
+                              _rating = widget.review.fields.rating;
+                            }
 
-                              final response = await request.postJson(
+                            final response = await request.postJson(
                                 "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/update-review-flutter/${widget.review.pk}/",
-                              jsonEncode(<String, String>{
+                                jsonEncode(<String, String>{
                                   'rating': _rating.toString(),
                                   'comment': _comment,
-                              }));
-                              if (response['status'] == 'success') {
-                                  // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                  content: Text("Review has been updated!"),
-                                  ));
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ReviewsPage(book: widget.book,)),
-                                  );
-                              } else {
-                                  // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                      content:
-                                          Text("ERROR, please try again!"),
-                                  ));
-                              }
+                                }));
+                            if (response['status'] == 'success') {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Review has been updated!"),
+                              ));
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ReviewsPage(
+                                          book: widget.book,
+                                        )),
+                              );
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("ERROR, please try again!"),
+                              ));
                             }
-                          },
-                          child: const Text(
-                            "Update",
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          }
+                        },
+                        child: const Text(
+                          "Update",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
             ),

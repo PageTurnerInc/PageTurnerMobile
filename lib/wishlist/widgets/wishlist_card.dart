@@ -6,12 +6,10 @@ import 'package:page_turner_mobile/wishlist/screens/wishlist_items.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-
-
 class WishlistCard extends StatelessWidget {
   final Wishlist book;
 
-  const WishlistCard(this.book, {super.key}); // Constructor
+  const WishlistCard(this.book, {super.key}); 
 
   void _showModal(BuildContext context) {
     String title = book.bookTitle;
@@ -77,7 +75,6 @@ class WishlistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    // Truncate title if it's longer than 42 characters
     String title = book.bookTitle;
     if (title.length > 42) {
       title = "${title.substring(0, 42)}...";
@@ -85,7 +82,7 @@ class WishlistCard extends StatelessWidget {
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0), // Rounded edges
+        borderRadius: BorderRadius.circular(10.0), 
       ),
       child: InkWell(
         onTap: () async {
@@ -96,11 +93,11 @@ class WishlistCard extends StatelessWidget {
           _showModal(context);
         },
         child: Container(
-          height: 400, // Fixed height
-          width: 250, // Fixed width
+          height: 400, 
+          width: 250,
           child: Column(
             crossAxisAlignment:
-                CrossAxisAlignment.stretch, // Stretch to fill width
+                CrossAxisAlignment.stretch, 
             children: [
               Expanded(
                 flex: 8,

@@ -29,13 +29,6 @@ class _NotesPageState extends State<NotesPage> {
     return list_notes;
   }
 
-  void deleteNote(int noteId) {
-    // Logic to delete the note
-    // You may need to send a request to your server to delete the note
-    print("Deleting note with ID: $noteId");
-    // Refresh the list after deletion
-  }
-
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -64,11 +57,11 @@ class _NotesPageState extends State<NotesPage> {
                   'assets/images/owned_book_bg.jpg',
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: 200, // Adjust the height as needed
+                  height: 200, 
                 ),
                 Container(
                   width: double.infinity,
-                  height: 200, // Ensure this matches the image's height
+                  height: 200, 
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,

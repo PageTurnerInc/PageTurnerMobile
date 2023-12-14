@@ -6,12 +6,11 @@ import 'package:page_turner_mobile/wishlist/screens/show_notes.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-
 class NotesCard extends StatelessWidget {
   final Notes note;
 
   const NotesCard(this.note, {super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
@@ -19,10 +18,10 @@ class NotesCard extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(note.fields.title,
-            style: const TextStyle(
-                fontSize: 18.0, fontWeight: FontWeight.bold)),
-        subtitle: Text(note.fields.notes,
-            style: const TextStyle(fontSize: 16.0)),
+            style:
+                const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+        subtitle:
+            Text(note.fields.notes, style: const TextStyle(fontSize: 16.0)),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () async {
@@ -32,20 +31,17 @@ class NotesCard extends StatelessWidget {
                   'noteID': note.pk.toString(),
                 }));
             if (response['status'] == 'success') {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text("Note anda berhasil dihapus!"),
               ));
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => NotesPage()),
+                MaterialPageRoute(builder: (context) => NotesPage()),
               );
             }
           },
         ),
       ),
     );
-  } // Constructor
-
+  } 
 }
