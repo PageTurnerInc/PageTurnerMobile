@@ -1,25 +1,16 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/rak_buku/models/rak.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
-import 'package:page_turner_mobile/rak_buku/screens/add_library.dart';
-import 'package:page_turner_mobile/rak_buku/screens/rak_buku.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
 
-import 'package:flutter/material.dart';
-import 'package:page_turner_mobile/daftar_belanja/screens/checkout_form.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
-import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
-import 'package:page_turner_mobile/menu/models/account.dart';
-import 'package:provider/provider.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:page_turner_mobile/menu/models/book.dart';
 
 class DetailRakPage extends StatelessWidget {
   final Rak rak;
@@ -68,13 +59,12 @@ class DetailRakPage extends StatelessWidget {
     final request = context.watch<CookieRequest>();
 
     double screenWidth = MediaQuery.of(context).size.width;
-    double buttonWidth = screenWidth * 0.92;
 
     String isPremium = "Regular Account";
     if (currentUser.isPremium == "Y") isPremium = "Premium Account";
 
     return Scaffold(
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: const NavBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
