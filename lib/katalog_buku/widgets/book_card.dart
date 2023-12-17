@@ -15,28 +15,6 @@ class BookCard extends StatelessWidget {
 
   const BookCard(this.book, {super.key});
 
-  Future<void> _addToCart(BuildContext context, CookieRequest request) async {
-    var response = await request.postJson(
-        'https://pageturner-c06-tk.pbp.cs.ui.ac.id/daftar_belanja/add_to_cart_flutter/',
-        jsonEncode({
-          "user": currentUser.user,
-          "bookID": book.pk,
-        }));
-    if (response["status"] == true) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(const SnackBar(
-            content:
-                Text("Book has been successfully added to Shopping Cart")));
-    } else {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(const SnackBar(
-            content:
-                Text("You already own this book!")));
-    }
-  }
-
   void _showModal(BuildContext context, request) {
     String title = book.fields.bookTitle;
     if (title.length > 42) {

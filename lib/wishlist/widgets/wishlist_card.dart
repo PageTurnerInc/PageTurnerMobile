@@ -92,7 +92,7 @@ class WishlistCard extends StatelessWidget {
                 SnackBar(content: Text("Kamu telah menekan buku $title!")));
           _showModal(context);
         },
-        child: Container(
+        child: SizedBox(
           height: 400, 
           width: 250,
           child: Column(
@@ -144,14 +144,16 @@ class WishlistCard extends StatelessWidget {
                                 'bookID': book.pk.toString(),
                               }));
                           if (response['status'] == 'success') {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text("Buku anda berhasil dihapus!"),
                             ));
+                            // ignore: use_build_context_synchronously
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => WishlistPage()),
+                                  builder: (context) => const WishlistPage()),
                             );
                           }
                         },

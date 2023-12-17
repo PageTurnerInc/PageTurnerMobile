@@ -10,6 +10,7 @@ class NotesPage extends StatefulWidget {
   const NotesPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _NotesPageState createState() => _NotesPageState();
 }
 
@@ -18,15 +19,14 @@ class _NotesPageState extends State<NotesPage> {
     var response = await request
         .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/wishlist/get_notes/");
     // melakukan konversi data json menjadi object Notes
-    List<Notes> list_notes = [];
+    List<Notes> listNotes = [];
     for (var d in response) {
-      print(Notes.fromJson(d));
       if (d != null) {
-        list_notes.add(Notes.fromJson(d));
+        listNotes.add(Notes.fromJson(d));
       }
     }
 
-    return list_notes;
+    return listNotes;
   }
 
   @override
@@ -45,7 +45,7 @@ class _NotesPageState extends State<NotesPage> {
           },
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
-          child: Icon(Icons.note_add),
+          child: const Icon(Icons.note_add),
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -73,7 +73,7 @@ class _NotesPageState extends State<NotesPage> {
                     ),
                   ),
                 ),
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -91,7 +91,7 @@ class _NotesPageState extends State<NotesPage> {
                 )
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             FutureBuilder<List<Notes>>(
                 future: fetchNotes(request),
                 builder: (context, snapshot) {
@@ -110,7 +110,7 @@ class _NotesPageState extends State<NotesPage> {
                   } else {
                     return ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           var note = snapshot.data![index];
