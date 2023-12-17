@@ -18,16 +18,17 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
   String _username = "";
   String _email = "";
 
-  List<String> accountType = ["--", "Yes", "No"];
+  List<String> accountType = ["Yes", "No"];
   String _isPremium = "";
 
   String _password = "";
   String _passwordConfirm = "";
-
+  String accType = "";
+  
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
-    _isPremium = accountType.first;
+    accType = accountType.first;
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -89,8 +90,8 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
                             if (value == null || value.isEmpty) {
                               return "Username cannot be empty!";
                             }
-                            if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                              return "Username can only consist of alphabetic characters!";
+                            if (!RegExp(r'^[a-zA-Z0-9@/./+/-/_]{1,150}$').hasMatch(value)) {
+                              return "Username must be 150 characters or fewer, using only letters, digits, and @/./+/-/_!";
                             }
                             return null;
                           },
@@ -133,7 +134,7 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
-                          value: _isPremium,
+                          value: accType,
                           items: accountType
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
@@ -143,7 +144,8 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              _isPremium = newValue!;
+                              accType = newValue!;
+                              _isPremium = accType;
                             });
                           },
                           validator: (String? value) {
@@ -232,6 +234,7 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
+                                  // print(_isPremium);
                                   final response = await request.post(
                                       "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/register/",
                                       {
