@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/menu/screens/login.dart';
-import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 
@@ -233,15 +232,15 @@ class _SignUpFormPageState extends State<SignUpFormPage> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  final response = await request.postJson(
+                                  final response = await request.post(
                                       "https://pageturner-c06-tk.pbp.cs.ui.ac.id/auth/register/",
-                                      jsonEncode(<String, String>{
-                                        'full_name': _fullName.toString(),
+                                      {
+                                        'fullname': _fullName.toString(),
                                         'username': _username.toString(),
                                         'email': _email.toString(),
                                         'is_premium': _isPremium.toString(),
                                         'password': _password.toString(),
-                                      }));
+                                      });
                                   if (response['status'] == true) {
                                     Navigator.pushReplacement(
                                       context,
