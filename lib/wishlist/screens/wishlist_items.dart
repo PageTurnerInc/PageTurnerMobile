@@ -25,7 +25,6 @@ class _WishlistPageState extends State<WishlistPage> {
     List<Wishlist> wishlistItems = [];
     for (var d in response) {
       if (d != null) {
-        print(Wishlist.fromJson(d));
         wishlistItems.add(Wishlist.fromJson(d));
       }
     }
@@ -52,10 +51,10 @@ class _WishlistPageState extends State<WishlistPage> {
             },
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
-            child: Icon(Icons.note_add),
             heroTag: null,
+            child: const Icon(Icons.note_add),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
               Navigator.push(
@@ -67,8 +66,8 @@ class _WishlistPageState extends State<WishlistPage> {
             },
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,
-            child: Icon(Icons.view_list),
             heroTag: null,
+            child: const Icon(Icons.view_list),
           ),
         ],
       ),
@@ -98,7 +97,7 @@ class _WishlistPageState extends State<WishlistPage> {
                   ),
                 ),
               ),
-              Column(
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -116,7 +115,7 @@ class _WishlistPageState extends State<WishlistPage> {
               )
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: FutureBuilder<List<Wishlist>>(

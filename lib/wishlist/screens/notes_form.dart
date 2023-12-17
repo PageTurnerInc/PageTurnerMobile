@@ -48,7 +48,7 @@ class _NotesFormPageState extends State<NotesFormPage> {
                   ),
                 ),
               ),
-              Column(
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -66,7 +66,7 @@ class _NotesFormPageState extends State<NotesFormPage> {
               )
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Form(
             key: _formKey,
             child: Column(
@@ -125,7 +125,7 @@ class _NotesFormPageState extends State<NotesFormPage> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(255, 86, 60, 4)),
+                            const Color.fromARGB(255, 86, 60, 4)),
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -137,16 +137,19 @@ class _NotesFormPageState extends State<NotesFormPage> {
                                 'notes': _notes,
                               }));
                           if (response['status'] == 'success') {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text("Notes anda berhasil disimpan!"),
                             ));
+                            // ignore: use_build_context_synchronously
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => WishlistPage()),
+                                  builder: (context) => const WishlistPage()),
                             );
                           } else {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text(

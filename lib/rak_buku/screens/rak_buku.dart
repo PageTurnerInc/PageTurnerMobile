@@ -45,13 +45,13 @@ class DetailRakPage extends StatelessWidget {
     );
 
     // melakukan konversi data json menjadi object Product
-    List<Book> list_buku = [];
+    List<Book> listBuku = [];
     for (var d in response) {
       if (d != null) {
-        list_buku.add(Book.fromJson(d));
+        listBuku.add(Book.fromJson(d));
       }
     }
-    return list_buku;
+    return listBuku;
   }
 
   @override
@@ -96,19 +96,19 @@ class DetailRakPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "${rak.fields.name}",
+                      rak.fields.name,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
-                      "${rak.fields.description}",
+                      rak.fields.description,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
@@ -130,7 +130,7 @@ class DetailRakPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          SizedBox(width: 16.0),
+                          const SizedBox(width: 16.0),
                           ElevatedButton(
                             onPressed: () {
                               _removeRak(context, request);
@@ -139,7 +139,7 @@ class DetailRakPage extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RakPage(),
+                                  builder: (context) => const RakPage(),
                                 ),
                               );
                             },
@@ -166,8 +166,8 @@ class DetailRakPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 100),
-                          Text(
+                          const SizedBox(height: 100),
+                          const Text(
                             'There are no books in your library...',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -176,8 +176,8 @@ class DetailRakPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Text(
+                          const SizedBox(height: 10),
+                          const Text(
                             'Check out our extensive catalogue!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -186,7 +186,7 @@ class DetailRakPage extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           SizedBox(
                             width: 320,
                             child: ElevatedButton(
@@ -194,7 +194,7 @@ class DetailRakPage extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => BookCataloguePage(),
+                                    builder: (context) => const BookCataloguePage(),
                                   ),
                                 );
                               },
@@ -205,11 +205,11 @@ class DetailRakPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 12,
                                 ),
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Catalogue',
                                 style: TextStyle(
                                   fontSize: 18,
@@ -227,7 +227,7 @@ class DetailRakPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          SizedBox(width: 16.0),
+                          const SizedBox(width: 16.0),
                           ElevatedButton(
                             onPressed: () {
                               _removeRak(context, request);
@@ -236,7 +236,7 @@ class DetailRakPage extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RakPage(),
+                                  builder: (context) => const RakPage(),
                                 ),
                               );
                             },
@@ -271,14 +271,14 @@ class DetailRakPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${rak.fields.name}",
+                                rak.fields.name,
                                 style: const TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Text("${rak.fields.description}"),
+                              Text(rak.fields.description),
                               const SizedBox(height: 10),
                               Text(
                                 "Created by: ${rak.fields.user}",

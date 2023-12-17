@@ -22,13 +22,13 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
         .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak-all/");
 
     // melakukan konversi data json menjadi object Product
-    List<Rak> list_rak = [];
+    List<Rak> listRak = [];
     for (var d in response) {
       if (d != null) {
-        list_rak.add(Rak.fromJson(d));
+        listRak.add(Rak.fromJson(d));
       }
     }
-    return list_rak;
+    return listRak;
   }
 
   @override

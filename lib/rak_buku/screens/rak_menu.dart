@@ -21,13 +21,13 @@ class _RakPageState extends State<RakPage> {
     var response = await request
         .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak/");
 
-    List<Rak> list_rak = [];
+    List<Rak> listRak = [];
     for (var d in response) {
       if (d != null) {
-        list_rak.add(Rak.fromJson(d));
+        listRak.add(Rak.fromJson(d));
       }
     }
-    return list_rak;
+    return listRak;
   }
 
   @override
