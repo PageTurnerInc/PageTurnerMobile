@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
+import 'package:page_turner_mobile/menu/models/account.dart';
 import 'package:page_turner_mobile/menu/models/book.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
@@ -210,6 +211,7 @@ class _CheckoutFormPageState extends State<CheckoutFormPage> {
                                       content: Text(
                                           "Payment with $_payment is successful"),
                                     ));
+                                    currentPage = 1;
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(

@@ -141,6 +141,7 @@ class _OwnedBooksPageState extends State<OwnedBooksPage> {
                           width: 320,
                           child: ElevatedButton(
                             onPressed: () {
+                              currentPage = 1;
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

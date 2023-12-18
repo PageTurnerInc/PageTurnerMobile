@@ -172,6 +172,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                           width: 320,
                           child: ElevatedButton(
                             onPressed: () {
+                              currentPage = 1;
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
