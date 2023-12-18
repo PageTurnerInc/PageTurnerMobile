@@ -12,7 +12,6 @@ class RakPage extends StatefulWidget {
   const RakPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _RakPageState createState() => _RakPageState();
 }
 
@@ -34,9 +33,6 @@ class _RakPageState extends State<RakPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
-    String isPremium = "Regular Account";
-    if (currentUser.isPremium == "Y") isPremium = "Premium Account";
-
     return Scaffold(
       bottomNavigationBar: const NavBar(),
       body: FutureBuilder<List<Rak>>(
@@ -47,13 +43,86 @@ class _RakPageState extends State<RakPage> {
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error loading data'));
           } else if (!snapshot.hasData || snapshot.data.isEmpty) {
-            return const Column(
+            return Column(
               children: [
-                Text(
-                  "Tidak ada data rak.",
-                  style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/shopping_cart_bg.webp',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 200,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 200,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(0, 0, 0, 0.65),
+                            Color.fromRGBO(0, 0, 0, 0.85),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Your Library',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Welcome ${currentUser.fullName}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    )
+                  ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 10),
+
+                Row(
+                  children: [
+                    const SizedBox(width: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AddLibrary()));
+                      },
+                      child: const Text('Add New Library'),
+                    ),
+                    const SizedBox(width: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RakRecommendPage()));
+                      },
+                      child: const Text('Recommendation'),
+                    ),
+                  ],
+                ),
               ],
             );
           } else {
@@ -106,32 +175,14 @@ class _RakPageState extends State<RakPage> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          isPremium,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ),
                       ],
                     )
                   ],
                 ),
                 const SizedBox(height: 10),
+
                 Row(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Your Library",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
                     const SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {
@@ -155,6 +206,7 @@ class _RakPageState extends State<RakPage> {
                     ),
                   ],
                 ),
+                
                 Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data!.length,

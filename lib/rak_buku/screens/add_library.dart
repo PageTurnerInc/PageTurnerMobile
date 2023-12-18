@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:flutter/material.dart';
 import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
@@ -17,7 +15,6 @@ class AddLibrary extends StatefulWidget {
 class _AddLibraryState extends State<AddLibrary> {
   final _formKey = GlobalKey<FormState>();
   String _name = "";
-  final int _amount = 0;
   String _description = "";
 
   @override
@@ -27,6 +24,7 @@ class _AddLibraryState extends State<AddLibrary> {
       appBar: AppBar(
         title: const Text('Add New Library'),
       ),
+      // TODO: Tambahkan drawer yang sudah dibuat di sini
       drawer: const LeftDrawer(),
       body: Form(
         key: _formKey,
@@ -69,6 +67,7 @@ class _AddLibraryState extends State<AddLibrary> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
+                      // TODO: Tambahkan variabel yang sesuai
                       _description = value!;
                     });
                   },
@@ -90,25 +89,25 @@ class _AddLibraryState extends State<AddLibrary> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        // Kirim ke Django dan tunggu respons
+                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                         final response = await request.postJson(
                             "https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/create-rak-flutter/",
                             jsonEncode(<String, String>{
                               'name': _name,
                               'description': _description,
+                              // TODO: Sesuaikan field data sesuai dengan aplikasimu
                             }));
                         if (response['status'] == 'success') {
-                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
                             content: Text("New library has been saved!"),
                           ));
-                          // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => const RakPage()),
                           );
                         } else {
-                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
                             content: Text("Error"),

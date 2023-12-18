@@ -5,14 +5,12 @@ import 'package:page_turner_mobile/rak_buku/models/rak.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
-
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
 
 class RakRecommendPage extends StatefulWidget {
   const RakRecommendPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _RakRecommendPageState createState() => _RakRecommendPageState();
 }
 
@@ -88,10 +86,10 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          'Your Library',
+                          'Library Recommendation',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -118,6 +116,21 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                         ),
                       ],
                     )
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const SizedBox(width: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RakPage()));
+                      },
+                      child: const Text('Your Library'),
+                    ),
                   ],
                 ),
               ],
@@ -153,10 +166,10 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          'Your Library',
+                          'Library Recommendation',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -188,16 +201,6 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Library Recommendation",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
                     const SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {

@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
@@ -58,75 +56,20 @@ class DetailRakPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
 
-    double screenWidth = MediaQuery.of(context).size.width;
-
     String isPremium = "Regular Account";
     if (currentUser.isPremium == "Y") isPremium = "Premium Account";
 
     return Scaffold(
       bottomNavigationBar: const NavBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/shopping_cart_bg.webp',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 200,
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromRGBO(0, 0, 0, 0.65),
-                        Color.fromRGBO(0, 0, 0, 0.85),
-                      ],
-                    ),
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      rak.fields.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      rak.fields.description,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            FutureBuilder<List<Book>>(
-              future: fetchBuku(request),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return const Text('Error loading data');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Column(
+      body: FutureBuilder<List<Book>>(
+        future: fetchBuku(request),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error loading data'));
+          } else if (!snapshot.hasData || snapshot.data.isEmpty) {
+            return Column(
                     children: [
                       Row(
                         children: [
@@ -222,13 +165,72 @@ class DetailRakPage extends StatelessWidget {
                       ),
                     ],
                   );
-                } else {
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(width: 16.0),
-                          ElevatedButton(
+          } else {
+            return Column(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/shopping_cart_bg.webp',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 200,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 200,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(0, 0, 0, 0.65),
+                            Color.fromRGBO(0, 0, 0, 0.85),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          rak.fields.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          rak.fields.description,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          isPremium,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(height: 10),
+
+                ElevatedButton(
                             onPressed: () {
                               _removeRak(context, request);
 
@@ -257,51 +259,21 @@ class DetailRakPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ],
+
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) => Card(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                rak.fields.name,
-                                style: const TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(rak.fields.description),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Created by: ${rak.fields.user}",
-                                style: const TextStyle(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (_, index) => Card(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                                 Text(
                                   "${snapshot.data![index].fields.bookTitle}",
                                   style: const TextStyle(
@@ -310,11 +282,9 @@ class DetailRakPage extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text(
-                                    "${snapshot.data![index].fields.bookAuthor}"),
+                                Text("${snapshot.data![index].fields.bookAuthor}"),
                                 const SizedBox(height: 10),
-                                Text(
-                                    "${snapshot.data![index].fields.yearOfPublication}"),
+                                Text("${snapshot.data![index].fields.yearOfPublication}"),
                                 ElevatedButton(
                                   onPressed: () {
                                     Book book = snapshot.data![index];
@@ -324,8 +294,7 @@ class DetailRakPage extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailRakPage(rak),
+                                        builder: (context) => DetailRakPage(rak),
                                       ),
                                     );
                                   },
@@ -336,8 +305,7 @@ class DetailRakPage extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
                                   ),
                                   child: const Text(
                                     'Delete',
@@ -348,17 +316,16 @@ class DetailRakPage extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
                         ),
                       ),
-                    ],
-                  );
-                }
-              },
-            ),
-          ],
-        ),
+                    ),
+                  ),
+                ),
+
+              ],
+            );
+          }
+        },
       ),
     );
   }

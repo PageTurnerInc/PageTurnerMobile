@@ -55,7 +55,7 @@ class MenuCard extends StatelessWidget {
               ),
             );
           } else if (item.name == "Library") {
-            currentPage = 4;
+            currentPage = 5;
             Navigator.push(
               context,
               MaterialPageRoute(
