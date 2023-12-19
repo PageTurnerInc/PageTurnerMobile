@@ -16,15 +16,15 @@ class ReviewCard extends StatelessWidget {
 
   const ReviewCard({required this.book, required this.review, required this.isMyReview, Key? key}) : super(key: key);
 
-  Future<void> _removeReview(BuildContext context, CookieRequest request) async {
-    // Is this right
-    await request.postJson(
-      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/delete-review-flutter/",
-    jsonEncode(<String, int>{
-        "book-id": book.pk,
-        "review-id": review.pk
-    }));
-  }
+  // Future<void> _removeReview(BuildContext context, CookieRequest request) async {
+  //   // Is this right
+  //   await request.postJson(
+  //     "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/delete-review-flutter/",
+  //   jsonEncode(<String, int>{
+  //       "book-id": book.pk,
+  //       "review-id": review.pk
+  //   }));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -235,16 +235,35 @@ class ReviewCard extends StatelessWidget {
                                               SizedBox(
                                                 width: buttonWidth,
                                                 child: ElevatedButton(
-                                                  onPressed: () {
-                                                    _removeReview(context, request);
-                                                    Navigator.pop(context);
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ReviewsPage(book: book,),
-                                                      ),
-                                                    );
+                                                  onPressed: () async {
+                                                    final response = await request.postJson(
+                                                      "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/delete-review-flutter/",
+                                                    jsonEncode(<String, int>{
+                                                        "book-id": book.pk,
+                                                        "review-id": review.pk
+                                                    }));
+
+                                                    if (response['status'] == 'success') {
+                                                      // ignore: use_build_context_synchronously
+                                                      ScaffoldMessenger.of(context)
+                                                          .showSnackBar(const SnackBar(
+                                                        content: Text("Your review has been deleted!"),
+                                                      ));
+                                                      // ignore: use_build_context_synchronously
+                                                      Navigator.pushReplacement(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => ReviewsPage(
+                                                                  book: book,
+                                                                )),
+                                                      );
+                                                    } else {
+                                                      // ignore: use_build_context_synchronously
+                                                      ScaffoldMessenger.of(context)
+                                                          .showSnackBar(const SnackBar(
+                                                        content: Text("ERROR, please try again!"),
+                                                      ));
+                                                    }
                                                   },
                                                   style: ElevatedButton.styleFrom(
                                                     foregroundColor: Colors.white,

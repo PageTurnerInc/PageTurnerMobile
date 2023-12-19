@@ -120,6 +120,11 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                                 }));
                             if (response['status'] == 'success') {
                               // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Review has been created!"),
+                              ));
+                              // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
