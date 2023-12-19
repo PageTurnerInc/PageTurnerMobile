@@ -4,7 +4,6 @@ import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
-import 'package:page_turner_mobile/menu/models/account.dart';
 
 class AddLibrary extends StatefulWidget {
   const AddLibrary({super.key});
@@ -16,7 +15,6 @@ class AddLibrary extends StatefulWidget {
 class _AddLibraryState extends State<AddLibrary> {
   final _formKey = GlobalKey<FormState>();
   String _name = "";
-  int _amount = 0;
   String _description = "";
 
   @override
@@ -107,7 +105,7 @@ class _AddLibraryState extends State<AddLibrary> {
                           ));
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => RakPage()),
+                            MaterialPageRoute(builder: (context) => const RakPage()),
                           );
                         } else {
                           ScaffoldMessenger.of(context)

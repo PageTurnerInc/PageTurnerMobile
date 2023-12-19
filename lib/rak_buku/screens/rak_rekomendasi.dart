@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:page_turner_mobile/rak_buku/models/rak.dart';
-import 'package:page_turner_mobile/menu/widgets/left_drawer.dart';
-import 'package:page_turner_mobile/rak_buku/screens/add_library.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_menu.dart';
 import 'package:page_turner_mobile/rak_buku/screens/rak_buku.dart';
 import 'package:page_turner_mobile/menu/models/account.dart';
-
-import 'package:page_turner_mobile/daftar_belanja/screens/checkout_form.dart';
 import 'package:page_turner_mobile/daftar_belanja/widgets/navbar.dart';
-import 'package:page_turner_mobile/daftar_belanja/widgets/shopping_cart_card.dart';
-import 'package:page_turner_mobile/katalog_buku/screens/katalog_buku.dart';
-import 'package:page_turner_mobile/menu/models/account.dart';
-import 'package:provider/provider.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:page_turner_mobile/menu/models/book.dart';
 
 class RakRecommendPage extends StatefulWidget {
   const RakRecommendPage({Key? key}) : super(key: key);
@@ -32,13 +20,13 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
         .get("https://pageturner-c06-tk.pbp.cs.ui.ac.id/rak_buku/get-rak-all/");
 
     // melakukan konversi data json menjadi object Product
-    List<Rak> list_rak = [];
+    List<Rak> listRak = [];
     for (var d in response) {
       if (d != null) {
-        list_rak.add(Rak.fromJson(d));
+        listRak.add(Rak.fromJson(d));
       }
     }
-    return list_rak;
+    return listRak;
   }
 
   @override
@@ -49,7 +37,7 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
     if (currentUser.isPremium == "Y") isPremium = "Premium Account";
 
     return Scaffold(
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar: const NavBar(),
       body: FutureBuilder<List<Rak>>(
         future: fetchRak(request),
         builder: (context, AsyncSnapshot snapshot) {
@@ -97,27 +85,27 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'Your Library',
+                        const Text(
+                          'Library Recommendation',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Welcome ${currentUser.fullName}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        Text(
+                        const SizedBox(height: 10),
+                        const Text(
                           "Upgrade your account to premium to see other users' libraries",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -128,6 +116,21 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                         ),
                       ],
                     )
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const SizedBox(width: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RakPage()));
+                      },
+                      child: const Text('Your Library'),
+                    ),
                   ],
                 ),
               ],
@@ -162,30 +165,30 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'Your Library',
+                        const Text(
+                          'Library Recommendation',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Welcome ${currentUser.fullName}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           isPremium,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
                             color: Colors.white,
@@ -195,20 +198,10 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                     )
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        "Library Recommendation",
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
+                    const SizedBox(width: 16.0),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -233,7 +226,7 @@ class _RakRecommendPageState extends State<RakRecommendPage> {
                           ),
                         );
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 100, // Set a fixed height for the container
                         child: Card(
                           margin: const EdgeInsets.symmetric(

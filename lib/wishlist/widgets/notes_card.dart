@@ -31,12 +31,14 @@ class NotesCard extends StatelessWidget {
                   'noteID': note.pk.toString(),
                 }));
             if (response['status'] == 'success') {
+              // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text("Note anda berhasil dihapus!"),
               ));
+              // ignore: use_build_context_synchronously
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => NotesPage()),
+                MaterialPageRoute(builder: (context) => const NotesPage()),
               );
             }
           },
