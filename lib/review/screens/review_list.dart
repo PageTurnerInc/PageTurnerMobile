@@ -208,17 +208,26 @@ class _ReviewsPageState extends State<ReviewsPage> {
                       ),
                     );
                   } else {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) {
-                        return ReviewCard(book: widget.book, 
-                          review: snapshot.data![index], 
-                          isMyReview: true
+                    return Column(
+                      children: snapshot.data!.map((review) {
+                        return ReviewCard(
+                          book: widget.book,
+                          review: review,
+                          isMyReview: true,
                         );
-                      }
+                      }).toList(),
                     );
+                    // return ListView.builder(
+                    //   scrollDirection: Axis.vertical,
+                    //   shrinkWrap: true,
+                    //   itemCount: snapshot.data!.length,
+                    //   itemBuilder: (_, index) {
+                    //     return ReviewCard(book: widget.book, 
+                    //       review: snapshot.data![index], 
+                    //       isMyReview: true
+                    //     );
+                    //   }
+                    // );
                   }
                 },
               ),
@@ -300,21 +309,34 @@ class _ReviewsPageState extends State<ReviewsPage> {
                       ],
                     );
                   } else {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) {
-                        if (selectedRating == '' || selectedRating == 'All Ratings' || snapshot.data![index].fields.rating == int.parse(selectedRating)) {
-                          return ReviewCard(book: widget.book, 
-                            review: snapshot.data![index], 
-                            isMyReview: false
+                    return Column(
+                      children: snapshot.data!.map((review) {
+                        if (selectedRating == '' || selectedRating == 'All Ratings' || review.fields.rating == int.parse(selectedRating)) {
+                          return ReviewCard(
+                            book: widget.book,
+                            review: review,
+                            isMyReview: false,
                           );
                         } else {
                           return const SizedBox.shrink();
                         }
-                      }
+                      }).toList(),
                     );
+                    // return ListView.builder(
+                    //   scrollDirection: Axis.vertical,
+                    //   shrinkWrap: true,
+                    //   itemCount: snapshot.data!.length,
+                    //   itemBuilder: (_, index) {
+                    //     if (selectedRating == '' || selectedRating == 'All Ratings' || snapshot.data![index].fields.rating == int.parse(selectedRating)) {
+                    //       return ReviewCard(book: widget.book, 
+                    //         review: snapshot.data![index], 
+                    //         isMyReview: false
+                    //       );
+                    //     } else {
+                    //       return const SizedBox.shrink();
+                    //     }
+                    //   }
+                    // );
                   }
                 },
               ),
