@@ -44,14 +44,21 @@ class BookPage extends StatelessWidget {
         bottomNavigationBar: const NavBar(),
         appBar: AppBar(
             leading: BackButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BookCataloguePage(),
+                  ),
+                )
+              },
             ),
             title: const Text("Detail Buku")),
         body: FutureBuilder<List<Rak>>(
         future: fetchRak(request),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -101,7 +108,7 @@ class BookPage extends StatelessWidget {
             
             ReviewBar(book: book),
 
-            Text("You have no Library"),
+            const Text("You have no Library"),
           ],
               ),
             );
@@ -154,7 +161,7 @@ class BookPage extends StatelessWidget {
             
             ReviewBar(book: book),
 
-            Text("Add to Library"),
+            const Text("Add to Library"),
             DropdownRakList(listRak: snapshot.data!, book: book),
           ],
               ),
