@@ -111,13 +111,7 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                         ),
                         onChanged: (String? value) {
                           setState(() {
-                            if (value == null || value.isEmpty) {
-                              _commentController.text = widget.review.fields.comment;
-                              _comment = widget.review.fields.comment;
-                            } else {
-                              _commentController.text = value;
-                              _comment = value;
-                            }
+                            _comment = value ?? '';
                           });
                         }),
                   ),

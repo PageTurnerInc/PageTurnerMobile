@@ -84,7 +84,11 @@ class ReviewCard extends StatelessWidget {
                   (review.fields.comment.length > 150
                       ? '${review.fields.comment.substring(0, 150)}... '
                       : '${commentLines.sublist(0, 3).join('\n')}... '
-                  ) : review.fields.comment,
+                  ) : (
+                    review.fields.comment.length > 150
+                      ? '${review.fields.comment.substring(0, 150)}... '
+                      : review.fields.comment
+                  )
               ),
               const SizedBox(
                 height: 10,
