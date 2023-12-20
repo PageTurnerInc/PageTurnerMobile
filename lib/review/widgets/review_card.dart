@@ -16,21 +16,14 @@ class ReviewCard extends StatelessWidget {
 
   const ReviewCard({required this.book, required this.review, required this.isMyReview, Key? key}) : super(key: key);
 
-  // Future<void> _removeReview(BuildContext context, CookieRequest request) async {
-  //   // Is this right
-  //   await request.postJson(
-  //     "https://pageturner-c06-tk.pbp.cs.ui.ac.id/review/delete-review-flutter/",
-  //   jsonEncode(<String, int>{
-  //       "book-id": book.pk,
-  //       "review-id": review.pk
-  //   }));
-  // }
-
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     double screenWidth = MediaQuery.of(context).size.width;
     double buttonWidth = screenWidth * 0.3;
+
+    final List<String> commentLines = review.fields.comment.split('\n');
+    final bool showSeeMoreButton = commentLines.length > 3;
 
     return Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -87,9 +80,11 @@ class ReviewCard extends StatelessWidget {
               ),
               Text(
                 // Check if the comment length is greater than 150
-                review.fields.comment.length > 150
-                    ? '${review.fields.comment.substring(0, 150)}... '
-                    : review.fields.comment,
+                showSeeMoreButton ?
+                  (review.fields.comment.length > 150
+                      ? '${review.fields.comment.substring(0, 150)}... '
+                      : '${commentLines.sublist(0, 3).join('\n')}... '
+                  ) : review.fields.comment,
               ),
               const SizedBox(
                 height: 10,
@@ -98,7 +93,7 @@ class ReviewCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Conditionally show the "Read More" button
-                  if (review.fields.comment.length > 150 || review.fields.reviewer.length > 10)
+                  if (review.fields.comment.length > 150 || review.fields.reviewer.length > 10 || showSeeMoreButton)
                     TextButton(
                       onPressed: () {
                         // Show a modal (dialog) with the full comment

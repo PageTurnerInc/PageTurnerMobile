@@ -24,7 +24,15 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
 
   int _rating = 0;
   String _comment = "";
-  int _currentRating = 0;
+  late int _currentRating;
+  late TextEditingController _commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentRating = widget.review.fields.rating;
+    _commentController = TextEditingController(text: widget.review.fields.comment);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +41,20 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Create Your Review',
+          'Update Your Review',
           style: TextStyle(color: Colors.black),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReviewsPage(book: widget.book),
+              ),
+            );
+          },
+        )
       ),
       bottomNavigationBar: const NavBar(),
       body: Container(
@@ -55,6 +74,10 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(5, (index) {
                       // Menentukan warna bintang berdasarkan rating
+                      Color starColor = index < _currentRating
+                        ? Colors.blue
+                        : Colors.grey;
+                        
                       return GestureDetector(
                         onTap: () {
                           setState(() {
@@ -65,9 +88,7 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                         },
                         child: Icon(
                           Icons.star,
-                          color: index < _currentRating
-                              ? Colors.blue
-                              : Colors.grey,
+                          color: starColor,
                           size: 50,
                         ),
                       );
@@ -78,9 +99,11 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
+                    child: TextField(
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
+                        controller: _commentController,
                         decoration: InputDecoration(
-                          hintText: "Describe Your Experience (Optional)",
                           labelText: "Describe Your Experience (Optional)",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -89,8 +112,10 @@ class _ReviewUpdatePageState extends State<ReviewUpdatePage> {
                         onChanged: (String? value) {
                           setState(() {
                             if (value == null || value.isEmpty) {
+                              _commentController.text = widget.review.fields.comment;
                               _comment = widget.review.fields.comment;
                             } else {
+                              _commentController.text = value;
                               _comment = value;
                             }
                           });

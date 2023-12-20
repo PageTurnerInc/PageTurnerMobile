@@ -33,6 +33,17 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
           'Create Your Review',
           style: TextStyle(color: Colors.black),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReviewsPage(book: widget.book),
+              ),
+            );
+          },
+        )
       ),
       bottomNavigationBar: const NavBar(),
       body: Container(
@@ -75,7 +86,9 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
+                    child: TextField(
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(
                           hintText: "Describe Your Experience (Optional)",
                           labelText: "Describe Your Experience (Optional)",
